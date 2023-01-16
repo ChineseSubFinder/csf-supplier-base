@@ -11,6 +11,7 @@ import (
 	"github.com/WQGroup/logger"
 	"github.com/allanpk716/rod_helper"
 	tmdb "github.com/cyruzin/golang-tmdb"
+	"github.com/go-resty/resty/v2"
 	"github.com/pkg/errors"
 	"gorm.io/gorm"
 	"strconv"
