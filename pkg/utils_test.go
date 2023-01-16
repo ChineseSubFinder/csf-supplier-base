@@ -1,0 +1,146 @@
+package pkg
+
+import "testing"
+
+func TestBase642IMGFile(t *testing.T) {
+	base64String := "Qk3aHwAAAAAAADYAAAAoAAAAZAAAABsAAAABABgAAAAAAKQfAAAAAQAAAAEAAAAAAAAAAAAA3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS29vbrrSupqymtry2rrSuyMjI5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3NzcyMjItry2rrSupqymtry20dLR0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm0dLRpqymtry2rrSuw8TD5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzczc3Ntry2rrSupqymtry2rrSuyMjI5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3NzcyMjItry2wsTC0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS3Nzc0tLS5ubm3Nzc0tLS5ubm1dbVepV6AJkAAJkAAJkAAJkAgJqAzMzM5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS39/fgJqAAJkAAJkAAJkAAJkAhqCG1dbV0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3NzczMzMhqCGAJkAAJkAAJkAbpRuxsbG5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubmkqOSAJkAAJkAAJkAAJkAAJkAgJqAzMzM5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubmt7u3I40jTJBMw8XD0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc5ubm3Nzc0tLS5ubm3Nzc0tLSkKWQAJkAFJEUQ49DQIxAFJEUAJkAip+K0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3NzchJmEAJkAFZIVPYo9Q49DFZIVAJkAkKWQ3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubmw8XDDZMNQ49DQIxAG48bAJkAeZh5y8vL5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLSB5YHQIxAPYo9Q49DQIxAFJEUAJkAip+K0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubmkqOSAJkAf55/3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm0tLS5ubm3Nzc0tLS5ubm3NzcAJkAEZQReph60tLS5ubmeph6D5IPAJkA3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubmAJkAD5IPf55/3Nzc0tLSf55/EJMQAJkA5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS1NXUaZNp0tLS5ubmip+KF5AXAJkAw8XD0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3NzcVYtV5ubm3Nzc0tLS5ubmeph6D5IPAJkA3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLSmaqZAJkAdJJ05ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS3Nzc0tLS5ubm3Nzc0tLS5ubmAJkALosu5ubm3Nzc0tLS5ubmMI0wAJkA5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLSAJkAMI0w0tLS5ubm3Nzc0tLSM48zAJkA0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubmSY1JAJkAf55/3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubmMI0wAJkA5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3NzcpqymL48vTI1Mt7q35ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc5ubm3Nzc0tLS5ubm3Nzc0tLSAJkAMI0w0tLS5ubm3Nzc0tLSM48zAJkA0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3NzcAJkAM48z3Nzc0tLS5ubm3NzcLosuAJkA3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLSjKOMFJIUAJkA5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLSM48zAJkA0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3NzcdJJ0AJkAkqOS0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm0tLS5ubm3Nzc0tLS5ubm3NzcVYtVG5IbmKeY0tLS5ubmmKeYGY8ZXZNd3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubmWY9ZGY8Zn66f3Nzc0tLSn66fGpAaVYtV5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubmxcfFcZFxfJx8d5d3sbWxM48zAJkA0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubmmKeYGY8ZXZNd3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS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5ubm3Nzc0tLS5ubmt7u3r7Ovv8O/t7u3r7Ovv8O/t7u3r7Ov5ubm3Nzc0tLS5ubm3Nzc0tLS3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS5ubm3Nzc0tLS"
+
+	desFPath, err := Base642IMGFile("bmp", base64String, "C:\\temp\\captcha")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	println(desFPath)
+}
+
+func TestGetSeasonAndEpisodeFromSubFileName(t *testing.T) {
+	type args struct {
+		videoFileName string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    bool
+		want1   int
+		want2   int
+		wantErr bool
+	}{
+		{
+			name: "00",
+			args: args{
+				videoFileName: "[zmk.pw]风骚律师 第一季 Better.Call.Saul.S01.720p.BluRay.x264-WiKi.rar",
+			},
+			want:    true,
+			want1:   1,
+			want2:   0,
+			wantErr: false,
+		},
+		{
+			name: "01",
+			args: args{
+				videoFileName: "[zmk.pw]风骚律师 第一季 Better.Call.Saul.S1.720p.BluRay.x264-WiKi.rar",
+			},
+			want:    true,
+			want1:   1,
+			want2:   0,
+			wantErr: false,
+		},
+		{
+			name: "02",
+			args: args{
+				videoFileName: "[zmk.pw]风骚律师 第一季 Better.Call.Saul S01 720p.BluRay.x264-WiKi.rar",
+			},
+			want:    true,
+			want1:   1,
+			want2:   0,
+			wantErr: false,
+		},
+		{
+			name: "03",
+			args: args{
+				videoFileName: "[zmk.pw]风骚律师 第一季 Better.Call.Saul S1 720p.BluRay.x264-WiKi.rar",
+			},
+			want:    true,
+			want1:   1,
+			want2:   0,
+			wantErr: false,
+		},
+		{
+			name: "04",
+			args: args{
+				videoFileName: "[zmk.pw][绝命毒师].S01-05+电影版.1080p.BluRay.x265-RARBG.YYeTS.Chs&amp;Eng.zip",
+			},
+			want:    false,
+			want1:   -1,
+			want2:   -1,
+			wantErr: true,
+		},
+		{
+			name: "05",
+			args: args{
+				videoFileName: "[zmk.pw]NCISLOSAngelesS06E05.chs.ass",
+			},
+			want:    false,
+			want1:   6,
+			want2:   5,
+			wantErr: false,
+		},
+		{
+			name: "06",
+			args: args{
+				videoFileName: "S06E05.ass",
+			},
+			want:    false,
+			want1:   6,
+			want2:   5,
+			wantErr: false,
+		},
+		{
+			name: "07",
+			args: args{
+				videoFileName: "S6E5.ass",
+			},
+			want:    false,
+			want1:   6,
+			want2:   5,
+			wantErr: false,
+		},
+		{
+			name: "08",
+			args: args{
+				videoFileName: "Better.Call.Saul.S06E09",
+			},
+			want:    false,
+			want1:   6,
+			want2:   9,
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, got1, got2, err := GetSeasonAndEpisodeFromSubFileName(tt.args.videoFileName)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("GetSeasonAndEpisodeFromSubFileName() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if got != tt.want {
+				t.Errorf("GetSeasonAndEpisodeFromSubFileName() got = %v, want %v", got, tt.want)
+			}
+			if got1 != tt.want1 {
+				t.Errorf("GetSeasonAndEpisodeFromSubFileName() got1 = %v, want %v", got1, tt.want1)
+			}
+			if got2 != tt.want2 {
+				t.Errorf("GetSeasonAndEpisodeFromSubFileName() got2 = %v, want %v", got2, tt.want2)
+			}
+		})
+	}
+}
+
+func TestWriteFile(t *testing.T) {
+
+	desFileFPath := "X:\\subtitles\\zimuku\\movie\\tt1649418\\[zmk.pw]The.Gray.Man.2022.2160p.NF.WEBRip.DDP5.1.Atmos.x265-CMRG.&amp;.1080p.HDR.HEVC-SMURF.zip"
+	err := WriteFile(desFileFPath, []byte("hello world"))
+	if err != nil {
+		t.Fatal(err)
+	}
+}
