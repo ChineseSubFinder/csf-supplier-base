@@ -16,7 +16,9 @@ require (
 	github.com/emirpasic/gods v1.18.1
 	github.com/fsnotify/fsnotify v1.6.0
 	github.com/go-creed/sat v1.0.3
+	github.com/go-resty/resty/v2 v2.7.0
 	github.com/jinzhu/now v1.1.5
+	github.com/mholt/archiver/v3 v3.5.1
 	github.com/middelink/go-parse-torrent-name v0.0.0-20190301154245-3ff4efacd4c4
 	github.com/nzlov/chardet v0.0.0-20190815145004-022cbcf483f9
 	github.com/olaure/chardet v0.0.7
@@ -52,7 +54,6 @@ require (
 	github.com/bodgit/windows v1.0.1 // indirect
 	github.com/connesc/cipherio v0.2.1 // indirect
 	github.com/dsnet/compress v0.0.2-0.20210315054119-f66993602bf5 // indirect
-	github.com/go-resty/resty/v2 v2.7.0 // indirect
 	github.com/go-rod/rod v0.112.0 // indirect
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
@@ -69,13 +70,12 @@ require (
 	github.com/magiconair/properties v1.8.6 // indirect
 	github.com/mattn/go-sqlite3 v1.14.16 // indirect
 	github.com/mediabuyerbot/go-crx3 v1.3.1 // indirect
-	github.com/mholt/archiver/v3 v3.5.1 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/nwaples/rardecode v1.1.3 // indirect
 	github.com/pelletier/go-toml v1.9.5 // indirect
-	github.com/pelletier/go-toml/v2 v2.0.5 // indirect
+	github.com/pelletier/go-toml/v2 v2.0.6 // indirect
 	github.com/pierrec/lz4/v4 v4.1.17 // indirect
 	github.com/rogpeppe/go-internal v1.8.1 // indirect
 	github.com/spf13/afero v1.9.2 // indirect
