@@ -4,6 +4,7 @@ import (
 	"github.com/ChineseSubFinder/csf-supplier-base/db/models"
 	"github.com/ChineseSubFinder/csf-supplier-base/pkg/common"
 	"github.com/ChineseSubFinder/csf-supplier-base/pkg/language"
+	subparser "github.com/ChineseSubFinder/csf-supplier-base/pkg/sub_parser_hub/sub_parser"
 	"path/filepath"
 	"strings"
 

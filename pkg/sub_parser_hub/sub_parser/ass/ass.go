@@ -3,6 +3,7 @@ package ass
 import (
 	"github.com/ChineseSubFinder/csf-supplier-base/pkg/language"
 	"github.com/ChineseSubFinder/csf-supplier-base/pkg/regex_things"
+	subparser "github.com/ChineseSubFinder/csf-supplier-base/pkg/sub_parser_hub/sub_parser"
 	"os"
 	"path/filepath"
 	"strings"

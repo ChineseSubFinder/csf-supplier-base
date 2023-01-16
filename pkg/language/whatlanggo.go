@@ -1,6 +1,7 @@
 package language
 
 import (
+	subparser "github.com/ChineseSubFinder/csf-supplier-base/pkg/sub_parser_hub/sub_parser"
 	"github.com/ChineseSubFinder/csf-supplier-base/pkg/types/language"
 	"github.com/abadojack/whatlanggo"
 )
