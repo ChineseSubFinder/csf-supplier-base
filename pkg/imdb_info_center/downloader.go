@@ -3,9 +3,9 @@ package imdb_info_center
 import (
 	"compress/gzip"
 	"fmt"
-	"github.com/ChineseSubFinder/csf-supplier/pkg"
-	"github.com/ChineseSubFinder/csf-supplier/pkg/settings"
-	"github.com/ChineseSubFinder/csf-supplier/pkg/struct_json"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/settings"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/struct_json"
 	"github.com/WQGroup/logger"
 	"io"
 	"net/http"

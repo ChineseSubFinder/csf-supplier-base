@@ -1,8 +1,8 @@
 package cloudflare_helper
 
 import (
-	"github.com/ChineseSubFinder/csf-supplier/internal/dao"
-	"github.com/ChineseSubFinder/csf-supplier/internal/models"
+	"github.com/ChineseSubFinder/csf-supplier-base/db/dao"
+	"github.com/ChineseSubFinder/csf-supplier-base/db/models"
 	"sort"
 	"testing"
 )

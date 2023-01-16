@@ -1,8 +1,8 @@
 package download_center
 
 import (
-	"github.com/ChineseSubFinder/csf-supplier/internal/dao"
-	"github.com/ChineseSubFinder/csf-supplier/internal/models"
+	"github.com/ChineseSubFinder/csf-supplier-base/db/dao"
+	"github.com/ChineseSubFinder/csf-supplier-base/db/models"
 	"github.com/WQGroup/logger"
 )
 

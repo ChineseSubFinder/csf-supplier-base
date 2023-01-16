@@ -3,7 +3,7 @@ package models
 import (
 	"crypto/sha256"
 	"fmt"
-	"github.com/ChineseSubFinder/csf-supplier/pkg/settings"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/settings"
 	"github.com/WQGroup/logger"
 	"net/url"
 	"path"

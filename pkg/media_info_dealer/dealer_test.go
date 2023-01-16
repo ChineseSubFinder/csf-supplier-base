@@ -1,9 +1,9 @@
 package media_info_dealer
 
 import (
-	"github.com/ChineseSubFinder/csf-supplier/pkg/common"
-	"github.com/ChineseSubFinder/csf-supplier/pkg/settings"
-	"github.com/ChineseSubFinder/csf-supplier/pkg/tmdb_api"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/common"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/settings"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/tmdb_api"
 	"github.com/WQGroup/logger"
 	"github.com/allanpk716/rod_helper"
 	"testing"

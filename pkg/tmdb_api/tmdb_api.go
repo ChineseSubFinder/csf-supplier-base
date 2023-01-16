@@ -2,8 +2,8 @@ package tmdb_api
 
 import (
 	"fmt"
-	"github.com/ChineseSubFinder/csf-supplier/pkg/common"
-	"github.com/ChineseSubFinder/csf-supplier/pkg/settings"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/common"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/settings"
 	"github.com/allanpk716/rod_helper"
 	tmdb "github.com/cyruzin/golang-tmdb"
 	"github.com/sirupsen/logrus"

@@ -2,8 +2,8 @@ package dao
 
 import (
 	"fmt"
-	models2 "github.com/ChineseSubFinder/csf-supplier/pkg/imdb_info_center/models"
-	"github.com/ChineseSubFinder/csf-supplier/pkg/settings"
+	models2 "github.com/ChineseSubFinder/csf-supplier-base/pkg/imdb_info_center/models"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/settings"
 	"github.com/WQGroup/logger"
 	"github.com/pkg/errors"
 	"gorm.io/driver/mysql"

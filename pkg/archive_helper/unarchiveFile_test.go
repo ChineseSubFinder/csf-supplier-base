@@ -1,8 +1,8 @@
 package archive_helper
 
 import (
-	"github.com/ChineseSubFinder/csf-supplier/pkg"
-	"github.com/ChineseSubFinder/csf-supplier/pkg/unit_test_helper"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/unit_test_helper"
 	"path/filepath"
 	"strings"
 	"testing"

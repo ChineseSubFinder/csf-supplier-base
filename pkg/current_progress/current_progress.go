@@ -1,8 +1,8 @@
 package current_progress
 
 import (
-	"github.com/ChineseSubFinder/csf-supplier/pkg"
-	"github.com/ChineseSubFinder/csf-supplier/pkg/struct_json"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/struct_json"
 	"sync"
 )
 

@@ -1,10 +1,9 @@
 package sub_parser_hub
 
 import (
-	"github.com/ChineseSubFinder/csf-supplier/crawler/supplier"
-	"github.com/ChineseSubFinder/csf-supplier/pkg/archive_helper"
-	"github.com/ChineseSubFinder/csf-supplier/pkg/common"
-	"github.com/ChineseSubFinder/csf-supplier/pkg/filter"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/archive_helper"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/common"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/filter"
 	"github.com/WQGroup/logger"
 	"os"
 	"path/filepath"
@@ -12,7 +11,7 @@ import (
 )
 
 // ChangeVideoExt2SubExt 检测 Name，如果是视频的后缀名就改为字幕的后缀名
-func ChangeVideoExt2SubExt(subInfos []*supplier.SubInfo) {
+func ChangeVideoExt2SubExt(subInfos []*SubInfo) {
 	for x, info := range subInfos {
 		tmpSubFileName := info.Name
 		// 如果后缀名是下载字幕目标的后缀名  或者 是压缩包格式的，则跳过

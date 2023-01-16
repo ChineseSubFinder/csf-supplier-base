@@ -5,7 +5,7 @@ import (
 	"github.com/olaure/chardet"
 	"strings"
 
-	"github.com/ChineseSubFinder/csf-supplier/pkg/charset"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/charset"
 	"github.com/axgle/mahonia"
 	"github.com/sirupsen/logrus"
 )

@@ -1,11 +1,11 @@
 package need_crawling
 
 import (
-	"github.com/ChineseSubFinder/csf-supplier/internal/dao"
-	"github.com/ChineseSubFinder/csf-supplier/internal/models"
-	"github.com/ChineseSubFinder/csf-supplier/pkg/common"
-	"github.com/ChineseSubFinder/csf-supplier/pkg/media_info_dealer"
-	"github.com/ChineseSubFinder/csf-supplier/pkg/search_subtitles"
+	"github.com/ChineseSubFinder/csf-supplier-base/db/dao"
+	"github.com/ChineseSubFinder/csf-supplier-base/db/models"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/common"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/media_info_dealer"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/search_subtitles"
 	"github.com/pkg/errors"
 	"time"
 )

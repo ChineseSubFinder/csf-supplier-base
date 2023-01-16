@@ -2,9 +2,8 @@ package orc_helper
 
 import (
 	"encoding/json"
-	"github.com/ChineseSubFinder/csf-supplier/pkg/settings"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/settings"
 	"github.com/allanpk716/rod_helper"
-	"github.com/go-resty/resty/v2"
 )
 
 type ORCHelper struct {

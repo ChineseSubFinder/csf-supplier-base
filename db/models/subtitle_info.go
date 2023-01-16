@@ -2,8 +2,8 @@ package models
 
 import (
 	"fmt"
-	"github.com/ChineseSubFinder/csf-supplier/pkg"
-	"github.com/ChineseSubFinder/csf-supplier/pkg/types/language"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/types/language"
 	"github.com/pkg/errors"
 	"io/ioutil"
 	"path/filepath"

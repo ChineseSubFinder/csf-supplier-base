@@ -1,6 +1,6 @@
 package media_info_dealer
 
-import "github.com/ChineseSubFinder/csf-supplier/internal/models"
+import "github.com/ChineseSubFinder/csf-supplier-base/db/models"
 
 type MediaInfo struct {
 	ImdbId           string

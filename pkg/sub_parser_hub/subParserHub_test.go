@@ -1,9 +1,9 @@
 package sub_parser_hub
 
 import (
-	"github.com/ChineseSubFinder/csf-supplier/pkg/sub_parser_hub/sub_parser/ass"
-	"github.com/ChineseSubFinder/csf-supplier/pkg/sub_parser_hub/sub_parser/srt"
-	"github.com/ChineseSubFinder/csf-supplier/pkg/unit_test_helper"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/sub_parser_hub/sub_parser/ass"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/sub_parser_hub/sub_parser/srt"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/unit_test_helper"
 	"github.com/WQGroup/logger"
 	"path/filepath"
 	"testing"

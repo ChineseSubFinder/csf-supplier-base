@@ -2,10 +2,10 @@ package subparser
 
 import (
 	"fmt"
-	"github.com/ChineseSubFinder/csf-supplier/internal/models"
-	"github.com/ChineseSubFinder/csf-supplier/pkg"
-	"github.com/ChineseSubFinder/csf-supplier/pkg/common"
-	"github.com/ChineseSubFinder/csf-supplier/pkg/types/language"
+	"github.com/ChineseSubFinder/csf-supplier-base/db/models"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/common"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/types/language"
 
 	"math"
 	"sort"

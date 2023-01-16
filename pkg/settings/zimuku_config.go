@@ -1,6 +1,6 @@
 package settings
 
-import "github.com/ChineseSubFinder/csf-supplier/pkg/common"
+import "github.com/ChineseSubFinder/csf-supplier-base/pkg/common"
 
 type ZiMuKuConfig struct {
 	SiteRootUrl            string                // https://zimuku.org

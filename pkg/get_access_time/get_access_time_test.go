@@ -1,7 +1,7 @@
 package get_access_time
 
 import (
-	"github.com/ChineseSubFinder/csf-supplier/pkg/unit_test_helper"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/unit_test_helper"
 	"path/filepath"
 	"testing"
 )

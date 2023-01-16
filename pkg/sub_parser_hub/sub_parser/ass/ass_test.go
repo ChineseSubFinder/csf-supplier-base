@@ -1,8 +1,8 @@
 package ass
 
 import (
-	"github.com/ChineseSubFinder/csf-supplier/pkg/types/language"
-	"github.com/ChineseSubFinder/csf-supplier/pkg/unit_test_helper"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/types/language"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/unit_test_helper"
 	"github.com/WQGroup/logger"
 	"path/filepath"
 	"testing"

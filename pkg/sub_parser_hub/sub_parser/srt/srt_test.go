@@ -1,9 +1,9 @@
 package srt
 
 import (
-	lan "github.com/ChineseSubFinder/csf-supplier/pkg/language"
-	"github.com/ChineseSubFinder/csf-supplier/pkg/types/language"
-	"github.com/ChineseSubFinder/csf-supplier/pkg/unit_test_helper"
+	lan "github.com/ChineseSubFinder/csf-supplier-base/pkg/language"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/types/language"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/unit_test_helper"
 	"github.com/WQGroup/logger"
 	"os"
 	"path/filepath"

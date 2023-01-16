@@ -1,9 +1,9 @@
 package pool_helper
 
 import (
-	"github.com/ChineseSubFinder/csf-supplier/pkg"
-	"github.com/ChineseSubFinder/csf-supplier/pkg/settings"
-	"github.com/ChineseSubFinder/csf-supplier/pkg/struct_json"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/settings"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/struct_json"
 	"github.com/WQGroup/logger"
 	"github.com/allanpk716/rod_helper"
 	"sync"

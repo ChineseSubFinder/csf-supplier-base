@@ -1,7 +1,7 @@
 package search
 
 import (
-	"github.com/ChineseSubFinder/csf-supplier/internal/models"
+	"github.com/ChineseSubFinder/csf-supplier-base/db/models"
 	"github.com/WQGroup/logger"
 	"github.com/pkg/errors"
 	"strconv"

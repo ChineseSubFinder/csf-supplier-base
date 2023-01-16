@@ -2,7 +2,7 @@ package zimuku
 
 import (
 	"errors"
-	"github.com/ChineseSubFinder/csf-supplier/pkg/settings"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/settings"
 	"github.com/WQGroup/logger"
 	"github.com/allanpk716/rod_helper"
 )

@@ -1,7 +1,7 @@
 package language
 
 import (
-	"github.com/ChineseSubFinder/csf-supplier/pkg/unit_test_helper"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/unit_test_helper"
 	"os"
 	"path/filepath"
 	"reflect"

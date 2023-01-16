@@ -1,14 +1,13 @@
 package sub_parser_hub
 
 import (
-	"github.com/ChineseSubFinder/csf-supplier/internal/models"
-	"github.com/ChineseSubFinder/csf-supplier/pkg/common"
-	"github.com/ChineseSubFinder/csf-supplier/pkg/language"
-	"github.com/ChineseSubFinder/csf-supplier/pkg/sub_parser_hub/sub_parser"
+	"github.com/ChineseSubFinder/csf-supplier-base/db/models"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/common"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/language"
 	"path/filepath"
 	"strings"
 
-	languageConst "github.com/ChineseSubFinder/csf-supplier/pkg/types/language"
+	languageConst "github.com/ChineseSubFinder/csf-supplier-base/pkg/types/language"
 
 	"github.com/sirupsen/logrus"
 )

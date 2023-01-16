@@ -2,7 +2,7 @@ package media_info_dealer
 
 import (
 	"fmt"
-	"github.com/ChineseSubFinder/csf-supplier/internal/models"
+	"github.com/ChineseSubFinder/csf-supplier-base/db/models"
 	"github.com/WQGroup/logger"
 	"time"
 )

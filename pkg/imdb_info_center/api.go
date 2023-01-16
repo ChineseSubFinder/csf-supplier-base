@@ -1,8 +1,8 @@
 package imdb_info_center
 
 import (
-	"github.com/ChineseSubFinder/csf-supplier/pkg/imdb_info_center/dao"
-	models2 "github.com/ChineseSubFinder/csf-supplier/pkg/imdb_info_center/models"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/imdb_info_center/dao"
+	models2 "github.com/ChineseSubFinder/csf-supplier-base/pkg/imdb_info_center/models"
 	"github.com/jinzhu/now"
 	"strings"
 	"time"

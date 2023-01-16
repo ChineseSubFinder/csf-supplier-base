@@ -1,7 +1,7 @@
 package captcha_client
 
 import (
-	"github.com/ChineseSubFinder/csf-supplier/pkg/settings"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/settings"
 	"testing"
 )
 
