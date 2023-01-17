@@ -11,7 +11,7 @@ import (
 )
 
 // Movie 是否需要爬取，在判断这些复杂条件前， 一般会针对没有爬取过的优先进行一次，能执行这个函数的，可以认为已经爬取过一次了，那么就需要按里面的逻辑来
-func Movie(dealer *media_info_dealer.Dealers, imdbId string, isHotToday bool, config common.IntervalConfig, alwaysOnline bool) (bool, error) {
+func Movie(dealer *media_info_dealer.Dealers, imdbId string, isHotToday, isTop bool, config common.IntervalConfig, alwaysOnline bool) (bool, error) {
 
 	// 获取电影的信息
 	movieDetailInfo, err := dealer.GetMovieDetailInfo(imdbId, alwaysOnline)
@@ -27,6 +27,17 @@ func Movie(dealer *media_info_dealer.Dealers, imdbId string, isHotToday bool, co
 	lastCrawlingTime := movies[0].LastCrawlingTime
 	// int64 转换为 time.Time
 	lastCrawlingTimeTime := time.Unix(lastCrawlingTime, 0)
+
+	if isTop == true {
+		// Top List 中的，也就是盖棺定论的
+		jugTime := time.Duration(config.MovieConfig.IsTop) * time.Minute
+		if time.Now().After(lastCrawlingTimeTime.Add(jugTime)) == true {
+			return true, nil
+		} else {
+			return false, nil
+		}
+	}
+
 	// 优先判断这个电影是否是近两年上映的
 	airDate := movieDetailInfo.GetReleaseDate()
 	j2YearsDate := airDate.AddDate(2, 0, 0)
@@ -87,7 +98,7 @@ func Movie(dealer *media_info_dealer.Dealers, imdbId string, isHotToday bool, co
 }
 
 // TV 是否需要爬取，在判断这些复杂条件前， 一般会针对没有爬取过的优先进行一次，能执行这个函数的，可以认为已经爬取过一次了，那么就需要按里面的逻辑来
-func TV(dealer *media_info_dealer.Dealers, imdbId string, isHotToday bool, config common.IntervalConfig, alwaysOnline bool) (bool, error) {
+func TV(dealer *media_info_dealer.Dealers, imdbId string, isHotToday, isTop bool, config common.IntervalConfig, alwaysOnline bool) (bool, error) {
 
 	// 获取连续剧的信息
 	tvDetailInfo, err := dealer.GetTVDetailInfo(imdbId, alwaysOnline)
@@ -103,6 +114,16 @@ func TV(dealer *media_info_dealer.Dealers, imdbId string, isHotToday bool, confi
 	lastCrawlingTime := tvs[0].LastCrawlingTime
 	// int64 转换为 time.Time
 	lastCrawlingTimeTime := time.Unix(lastCrawlingTime, 0)
+
+	if isTop == true {
+		// Top List 中的，也就是盖棺定论的
+		jugTime := time.Duration(config.MovieConfig.IsTop) * time.Minute
+		if time.Now().After(lastCrawlingTimeTime.Add(jugTime)) == true {
+			return true, nil
+		} else {
+			return false, nil
+		}
+	}
 	/*
 		大方向要分为：
 		1. 已经完结的、被砍掉的、被取消的
