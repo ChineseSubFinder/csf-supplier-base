@@ -30,11 +30,18 @@ func (t TvDetailInfo) IsAir() bool {
 	}
 	// 找出最大的 Season Number
 	var maxSeasonNumber int
+	var maxSeasonDetailInfo models.SeasonDetailInfo
 	for _, seasonDetailInfo := range t.SeasonDetailInfos {
 		if seasonDetailInfo.SeasonNumber > maxSeasonNumber {
 			maxSeasonNumber = seasonDetailInfo.SeasonNumber
+			maxSeasonDetailInfo = seasonDetailInfo
 		}
 	}
+	// 这里要有个预期，可能这个 Max 的值获取的到 Season 还没有开播，所以这里要判断一下
+	if maxSeasonDetailInfo.AirDate == "" || maxSeasonDetailInfo.GetAirDate().After(time.Now()) == true {
+		return false
+	}
+
 	// 获取最大 Season Number 下的最后一集的集数
 	var maxSeasonNumberMaxEpisodeNumber int
 	for _, episodeDetailInfo := range t.EpisodeDetailInfos {
