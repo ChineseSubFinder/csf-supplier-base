@@ -13,6 +13,7 @@ type WhichSite int
 
 const (
 	ZiMuKu WhichSite = iota + 1
+	Other            // 不確定或者無所謂的，就設置這個
 )
 
 func (w WhichSite) Index() int {
