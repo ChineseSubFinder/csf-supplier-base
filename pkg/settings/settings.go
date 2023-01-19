@@ -77,6 +77,7 @@ type Config struct {
 	ZipConfig            ZipConfig
 	ImdbInfoCenterConfig ImdbInfoCenterConfig
 	CloudFlareConfig     CloudFlareConfig
+	AuthConfig           AuthConfig
 }
 
 var (
