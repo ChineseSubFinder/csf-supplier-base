@@ -19,7 +19,9 @@ func IsMovie(imdbId string) (bool, bool) {
 		return false, false
 	}
 
-	if strings.Contains(strings.ToLower(tbs[0].TitleType), "movie") == true {
+	lowTypeName := strings.ToLower(tbs[0].TitleType)
+	if strings.Contains(lowTypeName, "movie") == true ||
+		strings.Contains(lowTypeName, "tvspecial") == true {
 		return true, true
 	} else {
 		return true, false
