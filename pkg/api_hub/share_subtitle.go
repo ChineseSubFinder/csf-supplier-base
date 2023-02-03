@@ -1,38 +1,38 @@
 package api_hub
 
 type SearchMovieSubtitleReq struct {
-	ImdbId string `from:"imdb_id"`
-	ApiKey string `from:"api_key"`
+	ImdbId string `json:"imdb_id"`
+	ApiKey string `json:"api_key"`
 }
 
 type SearchTVSubtitleByEpsReq struct {
-	ImdbId  string `from:"imdb_id"`
-	Season  int    `from:"season"`
-	Episode int    `from:"episode"`
-	ApiKey  string `from:"api_key"`
+	ImdbId  string `json:"imdb_id"`
+	Season  int    `json:"season"`
+	Episode int    `json:"episode"`
+	ApiKey  string `json:"api_key"`
 }
 
 type SearchTVSubtitleBySeasonReq struct {
-	ImdbId string `from:"imdb_id"`
-	Season int    `from:"season"`
-	ApiKey string `from:"api_key"`
+	ImdbId string `json:"imdb_id"`
+	Season int    `json:"season"`
+	ApiKey string `json:"api_key"`
 }
 
 type SearchTVSubtitleBySeasonPackageReq struct {
-	ImdbId          string `from:"imdb_id"`
-	SeasonPackageID string `from:"season_package_id"`
-	ApiKey          string `from:"api_key"`
+	ImdbId          string `json:"imdb_id"`
+	SeasonPackageID string `json:"season_package_id"`
+	ApiKey          string `json:"api_key"`
 }
 
 type GetSubtitleDownloadLinkReq struct {
-	ImdbId          string `from:"imdb_id"`
-	IsMovie         bool   `from:"is_movie"`
+	ImdbId          string `json:"imdb_id"`
+	IsMovie         bool   `json:"is_movie"`
 	Season          int    `json:"season"`
 	Episode         int    `json:"episode"`
 	SeasonPackageID string `json:"season_package_id"`
-	SubSha256       string `from:"sub_sha256"` // 文件的 SHA256
-	Language        int    `from:"language"`
-	ApiKey          string `from:"api_key"`
+	SubSha256       string `json:"sub_sha256"` // 文件的 SHA256
+	Language        int    `json:"language"`
+	ApiKey          string `json:"api_key"`
 }
 
 type SearchTVSubtitleBySeasonResp struct {
