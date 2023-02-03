@@ -17,17 +17,22 @@ import (
 
 // CloudFlareHelper 5000 人每天下载，每个人之多 66 次
 type CloudFlareHelper struct {
-	s3Client      *s3.Client
-	preSignClient *s3.PresignClient
+	s3Client           *s3.Client
+	preSignClient      *s3.PresignClient
+	cloudFlareConfig   settings.CloudFlareConfig
+	houseKeepingConfig settings.HouseKeepingConfig
 }
 
-func NewCloudFlareHelper() *CloudFlareHelper {
+func NewCloudFlareHelper(cloudFlareConfig settings.CloudFlareConfig, houseKeepingConfig settings.HouseKeepingConfig) *CloudFlareHelper {
 
-	c := CloudFlareHelper{}
+	c := CloudFlareHelper{
+		cloudFlareConfig:   cloudFlareConfig,
+		houseKeepingConfig: houseKeepingConfig,
+	}
 
 	r2Resolver := aws.EndpointResolverWithOptionsFunc(func(service, region string, options ...interface{}) (aws.Endpoint, error) {
 		return aws.Endpoint{
-			URL: fmt.Sprintf("https://%s.r2.cloudflarestorage.com", settings.Get().CloudFlareConfig.AccountId),
+			URL: fmt.Sprintf("https://%s.r2.cloudflarestorage.com", cloudFlareConfig.AccountId),
 		}, nil
 	})
 
@@ -35,8 +40,8 @@ func NewCloudFlareHelper() *CloudFlareHelper {
 		config.WithEndpointResolverWithOptions(r2Resolver),
 		config.WithCredentialsProvider(
 			credentials.NewStaticCredentialsProvider(
-				settings.Get().CloudFlareConfig.AccessKeyId,
-				settings.Get().CloudFlareConfig.AccessKeySecret, "")),
+				cloudFlareConfig.AccessKeyId,
+				cloudFlareConfig.AccessKeySecret, "")),
 	)
 	if err != nil {
 		logger.Panicln(err)
@@ -50,13 +55,13 @@ func NewCloudFlareHelper() *CloudFlareHelper {
 
 func (c CloudFlareHelper) UploadFile(subtitleInfo *models.SubtitleInfo) error {
 
-	body, err := subtitleInfo.GetSubtitleData(settings.Get().HouseKeepingConfig.SubsSaveRootDirPath)
+	body, err := subtitleInfo.GetSubtitleData(c.houseKeepingConfig.SubsSaveRootDirPath)
 	if err != nil {
 		return err
 	}
 	r2StoreKey := subtitleInfo.R2StoreKey()
 	_, err = c.s3Client.PutObject(context.TODO(), &s3.PutObjectInput{
-		Bucket: aws.String(settings.Get().CloudFlareConfig.BucketName),
+		Bucket: aws.String(c.cloudFlareConfig.BucketName),
 		Key:    aws.String(r2StoreKey),
 		Body:   bytes.NewReader(body),
 	})
@@ -69,7 +74,7 @@ func (c CloudFlareHelper) UploadFile(subtitleInfo *models.SubtitleInfo) error {
 func (c CloudFlareHelper) GenerateDownloadUrl(subtitleInfo *models.SubtitleInfo) (string, error) {
 
 	r2StoreKey := subtitleInfo.R2StoreKey()
-	downloadTTL := settings.Get().CloudFlareConfig.DownloadFileTTL
+	downloadTTL := c.cloudFlareConfig.DownloadFileTTL
 	if downloadTTL <= 0 {
 		downloadTTL = 60
 	} else if downloadTTL >= 240 {
@@ -77,7 +82,7 @@ func (c CloudFlareHelper) GenerateDownloadUrl(subtitleInfo *models.SubtitleInfo)
 	}
 
 	preSignedHTTPRequest, err := c.preSignClient.PresignGetObject(context.TODO(), &s3.GetObjectInput{
-		Bucket: aws.String(settings.Get().CloudFlareConfig.BucketName),
+		Bucket: aws.String(c.cloudFlareConfig.BucketName),
 		Key:    aws.String(r2StoreKey),
 	}, func(options *s3.PresignOptions) {
 		options.Expires = time.Duration(downloadTTL) * time.Second
@@ -105,7 +110,7 @@ func (c CloudFlareHelper) DeleteAllFile() error {
 	for {
 		// 删除一个桶里面所有的文件
 		result, err := c.s3Client.ListObjectsV2(context.TODO(), &s3.ListObjectsV2Input{
-			Bucket: aws.String(settings.Get().CloudFlareConfig.BucketName),
+			Bucket: aws.String(c.cloudFlareConfig.BucketName),
 		})
 		if err != nil {
 			return err
@@ -127,7 +132,7 @@ func (c CloudFlareHelper) DeleteAllFile() error {
 			}
 			logger.Infoln("Try Delete")
 			_, err = c.s3Client.DeleteObjects(context.TODO(), &s3.DeleteObjectsInput{
-				Bucket: aws.String(settings.Get().CloudFlareConfig.BucketName),
+				Bucket: aws.String(c.cloudFlareConfig.BucketName),
 				Delete: &types.Delete{Objects: objectIds},
 			})
 			if err != nil {

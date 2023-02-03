@@ -3,13 +3,14 @@ package cloudflare_helper
 import (
 	"github.com/ChineseSubFinder/csf-supplier-base/db/dao"
 	"github.com/ChineseSubFinder/csf-supplier-base/db/models"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/settings"
 	"sort"
 	"testing"
 )
 
 func TestCloudFlareHelper_uploadFile(t *testing.T) {
 
-	c := NewCloudFlareHelper()
+	c := NewCloudFlareHelper(settings.Get().CloudFlareConfig, settings.Get().HouseKeepingConfig)
 
 	//err := c.DeleteAllFile()
 	//if err != nil {
