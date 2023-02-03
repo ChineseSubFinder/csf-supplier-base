@@ -10,7 +10,7 @@ import (
 
 func TestCloudFlareHelper_uploadFile(t *testing.T) {
 
-	c := NewCloudFlareHelper(settings.Get().CloudFlareConfig, settings.Get().HouseKeepingConfig)
+	c := NewCloudFlareHelper(settings.Get().CloudFlareConfig)
 
 	//err := c.DeleteAllFile()
 	//if err != nil {
@@ -34,7 +34,7 @@ func TestCloudFlareHelper_uploadFile(t *testing.T) {
 		}
 		println(orgDLUrl)
 
-		err = c.UploadFile(&movieSub.SubtitleInfo)
+		err = c.UploadFile(settings.Get().HouseKeepingConfig, &movieSub.SubtitleInfo)
 		if err != nil {
 			t.Fatal(err)
 		}

@@ -18,19 +18,19 @@ type SearchTVSubtitleBySeasonReq struct {
 	ApiKey string `json:"api_key"`
 }
 
-type SearchTVSubtitleBySeasonPackageReq struct {
+type SearchTVSubtitleBySeasonPackageIdReq struct {
 	ImdbId          string `json:"imdb_id"`
 	SeasonPackageID string `json:"season_package_id"`
 	ApiKey          string `json:"api_key"`
 }
 
 type GetSubtitleDownloadLinkReq struct {
+	SubSha256       string `json:"sub_sha256"` // 文件的 SHA256
 	ImdbId          string `json:"imdb_id"`
 	IsMovie         bool   `json:"is_movie"`
 	Season          int    `json:"season"`
 	Episode         int    `json:"episode"`
 	SeasonPackageID string `json:"season_package_id"`
-	SubSha256       string `json:"sub_sha256"` // 文件的 SHA256
 	Language        int    `json:"language"`
 	ApiKey          string `json:"api_key"`
 }
@@ -48,9 +48,9 @@ type GetSubtitleDownloadLinkResp struct {
 }
 
 type SearchSubtitleResp struct {
-	Status   int        `json:"status"`            // 0 失败，1 成功
-	Message  string     `json:"message"`           // 返回的信息，包括成功和失败的原因
-	Subtitle []Subtitle `json:"subtitle,optional"` // 如果查询成功，返回的字幕信息
+	Status    int        `json:"status"`             // 0 失败，1 成功
+	Message   string     `json:"message"`            // 返回的信息，包括成功和失败的原因
+	Subtitles []Subtitle `json:"subtitles,optional"` // 如果查询成功，返回的字幕信息
 }
 
 type Subtitle struct {

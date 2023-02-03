@@ -17,17 +17,15 @@ import (
 
 // CloudFlareHelper 5000 人每天下载，每个人之多 66 次
 type CloudFlareHelper struct {
-	s3Client           *s3.Client
-	preSignClient      *s3.PresignClient
-	cloudFlareConfig   settings.CloudFlareConfig
-	houseKeepingConfig settings.HouseKeepingConfig
+	s3Client         *s3.Client
+	preSignClient    *s3.PresignClient
+	cloudFlareConfig settings.CloudFlareConfig
 }
 
-func NewCloudFlareHelper(cloudFlareConfig settings.CloudFlareConfig, houseKeepingConfig settings.HouseKeepingConfig) *CloudFlareHelper {
+func NewCloudFlareHelper(cloudFlareConfig settings.CloudFlareConfig) *CloudFlareHelper {
 
 	c := CloudFlareHelper{
-		cloudFlareConfig:   cloudFlareConfig,
-		houseKeepingConfig: houseKeepingConfig,
+		cloudFlareConfig: cloudFlareConfig,
 	}
 
 	r2Resolver := aws.EndpointResolverWithOptionsFunc(func(service, region string, options ...interface{}) (aws.Endpoint, error) {
@@ -53,9 +51,9 @@ func NewCloudFlareHelper(cloudFlareConfig settings.CloudFlareConfig, houseKeepin
 	return &c
 }
 
-func (c CloudFlareHelper) UploadFile(subtitleInfo *models.SubtitleInfo) error {
+func (c CloudFlareHelper) UploadFile(houseKeepingConfig settings.HouseKeepingConfig, subtitleInfo *models.SubtitleInfo) error {
 
-	body, err := subtitleInfo.GetSubtitleData(c.houseKeepingConfig.SubsSaveRootDirPath)
+	body, err := subtitleInfo.GetSubtitleData(houseKeepingConfig.SubsSaveRootDirPath)
 	if err != nil {
 		return err
 	}
