@@ -7,6 +7,7 @@ import (
 	"github.com/pkg/errors"
 	"io/ioutil"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"time"
 )
@@ -39,9 +40,24 @@ func (s *SubtitleInfo) Lang() language.MyLanguage {
 }
 
 func (s *SubtitleInfo) R2StoreKey() string {
+
 	// 将本地的 SaveRelativePath 路径转换为 r2 存储的 key
-	orgRDirPath := filepath.Dir(s.SaveRelativePath)
-	nowSubtitleExt := filepath.Ext(s.SaveRelativePath)
+
+	// 这里有个梗，因为现在的数据都是在 Windows 上获取上传的，那么路径都是 Windows 的 \\ 格式
+	// 在 Linux 上会有问题，所以如果是非 Windows 系统这里需要将 \\ 转换为 /
+	// 判断当前的系统是否是 Windows
+
+	nowSaveRelativePath := ""
+	if runtime.GOOS == "windows" {
+		// 当前是 Windows 系统
+		nowSaveRelativePath = s.SaveRelativePath
+	} else {
+		// 当前是非 Windows 系统
+		nowSaveRelativePath = strings.ReplaceAll(s.SaveRelativePath, "\\", "/")
+	}
+
+	orgRDirPath := filepath.Dir(nowSaveRelativePath)
+	nowSubtitleExt := filepath.Ext(nowSaveRelativePath)
 	return strings.ReplaceAll(filepath.Join(orgRDirPath, s.SubSha256+nowSubtitleExt), "\\", "/")
 }
 
