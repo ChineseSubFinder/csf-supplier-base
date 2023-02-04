@@ -32,6 +32,7 @@ type GetSubtitleDownloadLinkReq struct {
 	Episode         int    `json:"episode"`
 	SeasonPackageID string `json:"season_package_id"`
 	Language        int    `json:"language"`
+	Token           string `json:"token"` // 用于下载字幕的 token
 	ApiKey          string `json:"api_key"`
 }
 
@@ -61,4 +62,5 @@ type Subtitle struct {
 	IsMovie   bool   `json:"is_movie"`   // 是电影还是连续剧
 	Season    int    `json:"season"`     // 电影则是 -1
 	Episode   int    `json:"episode"`    // 连续剧则是 -1
+	Token     string `json:"token"`      // 用于下载字幕的 token
 }
