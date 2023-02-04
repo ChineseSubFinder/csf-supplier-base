@@ -43,7 +43,7 @@ func TestCloudFlareHelper_uploadFile(t *testing.T) {
 	for _, movieSub := range subs {
 		println("movieSub.SubSha256:", movieSub.SubSha256)
 
-		orgDLUrl, err := c.GenerateDownloadUrl(&movieSub.SubtitleInfo)
+		orgDLUrl, err := c.GenerateDownloadUrl(movieSub.SubtitleInfo.R2StoreKey())
 		if err != nil {
 			t.Fatal(err)
 		}

@@ -69,9 +69,8 @@ func (c CloudFlareHelper) UploadFile(houseKeepingConfig settings.HouseKeepingCon
 	return nil
 }
 
-func (c CloudFlareHelper) GenerateDownloadUrl(subtitleInfo *models.SubtitleInfo) (string, error) {
+func (c CloudFlareHelper) GenerateDownloadUrl(r2StoreKey string) (string, error) {
 
-	r2StoreKey := subtitleInfo.R2StoreKey()
 	downloadTTL := c.cloudFlareConfig.DownloadFileTTL
 	if downloadTTL <= 0 {
 		downloadTTL = 60
