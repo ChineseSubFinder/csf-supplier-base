@@ -88,6 +88,9 @@ func initDB() error {
 
 		&models.TopMovie{},
 		&models.TopTv{},
+
+		&models.FinishMovie{},
+		&models.FinishTV{},
 	)
 	if err != nil {
 		return errors.New(fmt.Sprintf("db AutoMigrate error, %s", err.Error()))
