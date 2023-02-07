@@ -78,6 +78,7 @@ type Config struct {
 	ImdbInfoCenterConfig ImdbInfoCenterConfig
 	CloudFlareConfig     CloudFlareConfig
 	AuthConfig           AuthConfig
+	TitleFilterConfig    TitleFilterConfig
 }
 
 var (

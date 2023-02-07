@@ -94,3 +94,13 @@ func (s *SubtitleInfo) MarkUpload2CloudDbFailed(failedStr string) {
 	s.Upload2CloudDbTime = time.Now().Unix()
 	s.Upload2CloudDbResult = failedStr[:250] // 避免越界
 }
+
+func (s *SubtitleInfo) GetTitle(needFilterKeyWords []string) string {
+
+	nowTitle := s.Title
+	// 因为下载的文件名中，可能包含一些 [zmk.pw] 这样的信息，需要剔除
+	for _, keyWord := range needFilterKeyWords {
+		nowTitle = strings.ReplaceAll(nowTitle, keyWord, "")
+	}
+	return nowTitle
+}
