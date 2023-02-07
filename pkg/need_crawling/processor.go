@@ -40,6 +40,12 @@ func Movie(dealer *media_info_dealer.Dealers, imdbId string, isHotToday, isTop b
 
 	// 优先判断这个电影是否是近两年上映的
 	airDate := movieDetailInfo.GetReleaseDate()
+
+	// 如果上映的时间比当前的时间大，那么也跳过
+	if airDate.After(time.Now()) == true {
+		return false, nil
+	}
+
 	j2YearsDate := airDate.AddDate(2, 0, 0)
 
 	if j2YearsDate.After(time.Now()) == true {
@@ -123,6 +129,12 @@ func TV(dealer *media_info_dealer.Dealers, imdbId string, isHotToday, isTop bool
 		} else {
 			return false, nil
 		}
+	}
+
+	// 如果首播的时间比当前的时间大，那么也跳过
+	firstAirDate := tvDetailInfo.GetFirstAirDate()
+	if firstAirDate.After(time.Now()) == true {
+		return false, nil
 	}
 	/*
 		大方向要分为：
