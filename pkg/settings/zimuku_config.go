@@ -14,4 +14,6 @@ type ZiMuKuConfig struct {
 	IntervalConfig         common.IntervalConfig // 每隔多少分钟检查一次
 	TopMovieEnable         bool                  // 下载Top电影的
 	TopTVEnable            bool                  // 下载Top连续剧
+	FinishMovieEnable      bool                  // 下载已经上映电影的
+	FinishTVEnable         bool                  // 下载已经完结连续剧
 }
