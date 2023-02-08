@@ -66,6 +66,12 @@ func TestUnArchiveFileEx(t *testing.T) {
 				desRootPath:  filepath.Join(testRootDirAbs, "[zmk.pw]Suits.S04E01-E16.1080p.WEB-DL.DD5.1.H.264-NTb"),
 			}, wantErr: false,
 		},
+		{
+			name: "[zmk.pw]The.Walking.Dead.S07E10.720p.HDTV.x264-AVS.rar", args: args{
+				fileFullPath: filepath.Join(testRootDirAbs, "[zmk.pw]The.Walking.Dead.S07E10.720p.HDTV.x264-AVS.rar"),
+				desRootPath:  filepath.Join(testRootDirAbs, "[zmk.pw]The.Walking.Dead.S07E10.720p.HDTV.x264-AVS"),
+			}, wantErr: false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

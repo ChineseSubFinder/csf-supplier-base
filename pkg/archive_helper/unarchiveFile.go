@@ -45,13 +45,13 @@ func CheckArchiveByBandizip(fileFullPath string) bool {
 	return false
 }
 
-func UnArchiveByBandizip(fileFullPath, desRootPath string) error {
+func UnArchiveByBandizip(fileFullPath, desRootPath string, ignoreUnZipErr bool) error {
 
 	var command *exec.Cmd
 	cmdArgs := []string{
 		"x",
 		//"-r",
-		"-y",
+		//"-y",
 		"-o:" + desRootPath,
 		fileFullPath,
 	}
@@ -61,11 +61,52 @@ func UnArchiveByBandizip(fileFullPath, desRootPath string) error {
 
 	command = exec.Command(settings.Get().ZipConfig.ExeFPath, cmdArgs...)
 	stdoutBytes, err := cmdutil.ExecAndGetStdoutBytes(command)
-	if err != nil {
+	if ignoreUnZipErr == false && err != nil {
 		return err
 	}
 	logger.Infoln("Bandizip stdout: ", string(stdoutBytes))
+
+	BandizipFilterErrorFile(desRootPath, string(stdoutBytes))
+
 	return nil
+}
+
+func BandizipFilterErrorFile(desRootPath, cmdOutResult string) {
+
+	/*
+		输出类似的情况，那么就需要找到一行中，开头是 Error - 的，然后得到这个文件的名称，再解压的结果中删除这个
+		因为这个解压出来也是残缺的
+
+		bz 7.29(Beta,x64) - Bandizip console tool. Copyright(C) 2022 Bandisoft
+		Extracting archive: \\192.168.50.252\Video\subtitles\zimuku\tv\tt1520211\7\[zmk.pw]The.Walking.Dead.S07E10.720p.HDTV.x264-AVS.rar
+		The.Walking.Dead.S07E10.720p.HDTV.NCARBBS.x264-AVS.chs.eng.ass
+		The.Walking.Dead.S07E10.720p.HDTV.NCARBBS.x264-AVS.chs.eng.简体&英文.srt
+		The.Walking.Dead.S07E10.720p.HDTV.NCARBBS.x264-AVS.chs.eng.简体.srt
+		The.Walking.Dead.S07E10.720p.HDTV.NCARBBS.x264-AVS.chs.eng.简体.ass
+		The.Walking.Dead.S07E10.720p.HDTV.NCARBBS.x264-AVS.chs.eng.繁体&英文.ass
+		Error - The.Walking.Dead.S07E10.720p.HDTV.NCARBBS.x264-AVS.chs.eng.繁体&英文.ass (0xa0000015: Cannot read archive data)
+	*/
+	errFront := "Error - "
+
+	// 1. 先找到 Error - 的行
+	for _, line := range strings.Split(cmdOutResult, "\n") {
+
+		if strings.HasPrefix(line, errFront) == true {
+			// 2. 找到这个文件的名称
+			fileName := strings.TrimPrefix(line, errFront)
+			fileName = strings.TrimSpace(fileName)
+			// 3. 从 desRootPath 存储路径中，遍历这个文件，再删除这个文件
+			_ = filepath.Walk(desRootPath, func(path string, info fs.FileInfo, err error) error {
+				// 4. 找到这个文件，删除
+				println(info.Name())
+				if strings.HasPrefix(fileName, info.Name()) == true {
+					// 5. 删除这个文件
+					_ = os.Remove(path)
+				}
+				return nil
+			})
+		}
+	}
 }
 
 // UnArchiveFileEx 发现打包的字幕内部还有一层压缩包···所以···
@@ -82,17 +123,17 @@ func UnArchiveFileEx(fileFullPath, desRootPath string, useBandizip bool, ignoreU
 	// 先进行一次解压
 	if useBandizip == true {
 
-		isPassed := CheckArchiveByBandizip(fileFullPath)
-		if ignoreUnZipErr == false && isPassed == false {
-			return errors.New("CheckArchiveByBandizip == false")
-		}
+		//isPassed := CheckArchiveByBandizip(fileFullPath)
+		//if ignoreUnZipErr == false && isPassed == false {
+		//	return errors.New("CheckArchiveByBandizip == false")
+		//}
 
-		if isPassed == true {
-			err = UnArchiveByBandizip(fileFullPath, desRootPath)
-			if ignoreUnZipErr == false && err != nil {
-				return err
-			}
+		//if isPassed == true {
+		err = UnArchiveByBandizip(fileFullPath, desRootPath, ignoreUnZipErr)
+		if ignoreUnZipErr == false && err != nil {
+			return err
 		}
+		//}
 
 	} else {
 		err = UnArchiveFile(fileFullPath, desRootPath)
@@ -126,15 +167,15 @@ func UnArchiveFileEx(fileFullPath, desRootPath string, useBandizip bool, ignoreU
 
 			if useBandizip == true {
 
-				isPassed := CheckArchiveByBandizip(needUnzipFileFPath)
-				if isPassed == true {
-					err = UnArchiveByBandizip(needUnzipFileFPath, desRootPath)
-					if ignoreUnZipErr == false {
-						if err != nil {
-							return err
-						}
+				//isPassed := CheckArchiveByBandizip(needUnzipFileFPath)
+				//if isPassed == true {
+				err = UnArchiveByBandizip(needUnzipFileFPath, desRootPath, ignoreUnZipErr)
+				if ignoreUnZipErr == false {
+					if err != nil {
+						return err
 					}
 				}
+				//}
 			} else {
 				err = UnArchiveFile(needUnzipFileFPath, desRootPath)
 				if ignoreUnZipErr == true {

@@ -26,7 +26,7 @@ func ExecAndGetStdoutJson(cmd *exec.Cmd, v interface{}) error {
 func ExecAndGetStdoutBytes(cmd *exec.Cmd) ([]byte, error) {
 	b := new(bytes.Buffer)
 	if err := ExecAndWriteStdout(cmd, b); err != nil {
-		return nil, err
+		return b.Bytes(), err
 	}
 	return b.Bytes(), nil
 }
