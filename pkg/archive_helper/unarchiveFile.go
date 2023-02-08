@@ -22,11 +22,35 @@ import (
 	"unicode/utf8"
 )
 
+func CheckArchiveByBandizip(fileFullPath string) bool {
+	var command *exec.Cmd
+	cmdArgs := []string{
+		"t",
+		fileFullPath,
+	}
+	if pkg.IsFile(settings.Get().ZipConfig.ExeFPath) == false {
+		logger.Panicln("Bandizip.exe not found")
+	}
+
+	command = exec.Command(settings.Get().ZipConfig.ExeFPath, cmdArgs...)
+	stdoutBytes, err := cmdutil.ExecAndGetStdoutBytes(command)
+	if err != nil {
+		logger.Errorln("cmdutil.ExecAndGetStdoutBytes Error", err)
+		return false
+	}
+	logger.Infoln("Bandizip stdout: ", string(stdoutBytes))
+	if strings.Contains(string(stdoutBytes), "All OK") == true {
+		return true
+	}
+	return false
+}
+
 func UnArchiveByBandizip(fileFullPath, desRootPath string) error {
+
 	var command *exec.Cmd
 	cmdArgs := []string{
 		"x",
-		"-r",
+		//"-r",
 		"-y",
 		"-o:" + desRootPath,
 		fileFullPath,
@@ -34,6 +58,7 @@ func UnArchiveByBandizip(fileFullPath, desRootPath string) error {
 	if pkg.IsFile(settings.Get().ZipConfig.ExeFPath) == false {
 		logger.Panicln("Bandizip.exe not found")
 	}
+
 	command = exec.Command(settings.Get().ZipConfig.ExeFPath, cmdArgs...)
 	stdoutBytes, err := cmdutil.ExecAndGetStdoutBytes(command)
 	if err != nil {
@@ -44,18 +69,34 @@ func UnArchiveByBandizip(fileFullPath, desRootPath string) error {
 }
 
 // UnArchiveFileEx 发现打包的字幕内部还有一层压缩包···所以···
-func UnArchiveFileEx(fileFullPath, desRootPath string, useBandizip bool) error {
+func UnArchiveFileEx(fileFullPath, desRootPath string, useBandizip bool, ignoreUnZipErr bool) error {
+
+	if pkg.IsDir(desRootPath) == false {
+		err := os.MkdirAll(desRootPath, os.ModePerm)
+		if err != nil {
+			return err
+		}
+	}
 
 	var err error
 	// 先进行一次解压
 	if useBandizip == true {
-		err = UnArchiveByBandizip(fileFullPath, desRootPath)
-		if err != nil {
-			return err
+
+		isPassed := CheckArchiveByBandizip(fileFullPath)
+		if ignoreUnZipErr == false && isPassed == false {
+			return errors.New("CheckArchiveByBandizip == false")
 		}
+
+		if isPassed == true {
+			err = UnArchiveByBandizip(fileFullPath, desRootPath)
+			if ignoreUnZipErr == false && err != nil {
+				return err
+			}
+		}
+
 	} else {
 		err = UnArchiveFile(fileFullPath, desRootPath)
-		if err != nil {
+		if ignoreUnZipErr == false && err != nil {
 			return err
 		}
 	}
@@ -84,14 +125,22 @@ func UnArchiveFileEx(fileFullPath, desRootPath string, useBandizip bool) error {
 		for _, needUnzipFileFPath := range needUnzipFileFPaths {
 
 			if useBandizip == true {
-				err = UnArchiveByBandizip(needUnzipFileFPath, desRootPath)
-				if err != nil {
-					return err
+
+				isPassed := CheckArchiveByBandizip(needUnzipFileFPath)
+				if isPassed == true {
+					err = UnArchiveByBandizip(needUnzipFileFPath, desRootPath)
+					if ignoreUnZipErr == false {
+						if err != nil {
+							return err
+						}
+					}
 				}
 			} else {
 				err = UnArchiveFile(needUnzipFileFPath, desRootPath)
-				if err != nil {
-					return err
+				if ignoreUnZipErr == true {
+					if err != nil {
+						return err
+					}
 				}
 			}
 			err = os.Remove(needUnzipFileFPath)
@@ -104,17 +153,17 @@ func UnArchiveFileEx(fileFullPath, desRootPath string, useBandizip bool) error {
 	}
 	// 第二次解压
 	err = doUnzipFun()
-	if err != nil {
+	if ignoreUnZipErr == false && err != nil {
 		return err
 	}
 	// 第三次解压
 	err = doUnzipFun()
-	if err != nil {
+	if ignoreUnZipErr == false && err != nil {
 		return err
 	}
 	// 第四次解压
 	err = doUnzipFun()
-	if err != nil {
+	if ignoreUnZipErr == false && err != nil {
 		return err
 	}
 

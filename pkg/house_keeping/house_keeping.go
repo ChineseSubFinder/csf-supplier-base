@@ -261,7 +261,7 @@ func (h HouseKeeping) organizeSubs(site models.WhichSite, subsSaveRootDirPath st
 		}
 
 		// 这里就是受支持的压缩文件
-		err = archive_helper.UnArchiveFileEx(nowFileFPath, tmpDir, true)
+		err = archive_helper.UnArchiveFileEx(nowFileFPath, tmpDir, true, true)
 		// 解压完成后，遍历受支持的字幕列表，加入缓存列表
 		if err != nil {
 			logger.Errorln("UnArchiveFileEx", nowFileFPath, err)

@@ -38,7 +38,12 @@ const subSRT = "oslo.2021.1080p.web.h264-naisu.繁体&英文.srt"
 
 func TestUnArchiveFileEx(t *testing.T) {
 
-	testRootDir := unit_test_helper.GetTestDataResourceRootPath([]string{"zips"}, 4, true)
+	testRootDir := unit_test_helper.GetTestDataResourceRootPath([]string{"zips"}, 1, true)
+
+	testRootDirAbs, err := filepath.Abs(testRootDir)
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	type args struct {
 		fileFullPath string
@@ -51,13 +56,20 @@ func TestUnArchiveFileEx(t *testing.T) {
 	}{
 		{
 			name: "[zimuku]_0_Inside No 9_S7E1.zip", args: args{
-				fileFullPath: filepath.Join(testRootDir, "[zimuku]_0_Inside No 9_S7E1.zip"),
-				desRootPath:  filepath.Join(testRootDir, "[zimuku]_0_Inside No 9_S7E1"),
-			}, wantErr: false},
+				fileFullPath: filepath.Join(testRootDirAbs, "[zimuku]_0_Inside No 9_S7E1.zip"),
+				desRootPath:  filepath.Join(testRootDirAbs, "[zimuku]_0_Inside No 9_S7E1"),
+			}, wantErr: false,
+		},
+		{
+			name: "[zmk.pw]Suits.S04E01-E16.1080p.WEB-DL.DD5.1.H.264-NTb.rar", args: args{
+				fileFullPath: filepath.Join(testRootDirAbs, "[zmk.pw]Suits.S04E01-E16.1080p.WEB-DL.DD5.1.H.264-NTb.rar"),
+				desRootPath:  filepath.Join(testRootDirAbs, "[zmk.pw]Suits.S04E01-E16.1080p.WEB-DL.DD5.1.H.264-NTb"),
+			}, wantErr: false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if err := UnArchiveFileEx(tt.args.fileFullPath, tt.args.desRootPath, false); (err != nil) != tt.wantErr {
+			if err := UnArchiveFileEx(tt.args.fileFullPath, tt.args.desRootPath, true, true); (err != nil) != tt.wantErr {
 				t.Errorf("UnArchiveFileEx() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
