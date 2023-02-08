@@ -185,7 +185,12 @@ func (h HouseKeeping) Process(site models.WhichSite, sourceId SourceId, download
 			if err != nil {
 				logger.Errorln("Insert 2 HouseKeepingError DB Error", downloadedInfoZiMuKu.Title, err)
 			}
-			continue
+
+			if sourceId == HouseKeepingError && houseKeepingError.SubtitleExtType == (int)(common.NotSupported) {
+				// 如果是从解压错误的逻辑触发过来的，那么就跳过 continue
+			} else {
+				continue
+			}
 		}
 		// 如果是处理上面错误的数据库中的数据，那么就可以删除了
 		if sourceId == HouseKeepingError {
