@@ -190,9 +190,8 @@ func (h HouseKeeping) Process(site models.WhichSite, sourceId SourceId, download
 		// 如果是处理上面错误的数据库中的数据，那么就可以删除了
 		if sourceId == HouseKeepingError {
 			logger.Infoln("Delete HouseKeepingError DB ID", downloadedInfoZiMuKu.ID)
-			var houseKeepingError models.HouseKeepingError
-			houseKeepingError.DownloadedSubId = downloadedInfoZiMuKu.ID
-			dao.Get().Delete(&houseKeepingError)
+
+			dao.Get().Where("downloaded_id = ?", downloadedInfoZiMuKu.ID).Delete(&models.HouseKeepingError{})
 		}
 	}
 }
