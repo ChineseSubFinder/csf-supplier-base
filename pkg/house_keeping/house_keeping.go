@@ -86,7 +86,7 @@ func (h HouseKeeping) GetSourceIds(sourceId SourceId) []models.DownloadedInfoZiM
 		*/
 		// 查询最后一个处理的 ID
 		var houseKeepingErrors []models.HouseKeepingError
-		dao.Get().Order("downloaded_id desc").Where("unzip_error = ? AND subtitle_ext_type = ? AND which_site = ?", false, 0, models.ZiMuKu.Index()).Limit(1).Find(&houseKeepingErrors)
+		dao.Get().Order("downloaded_id desc").Where("unzip_error = ? AND subtitle_ext_type = ? AND which_site = ?", true, 0, models.ZiMuKu.Index()).Limit(1).Find(&houseKeepingErrors)
 		var processStartId uint
 		if len(houseKeepingErrors) < 1 {
 			// 没有记录，从 1 开始，全新的开始
