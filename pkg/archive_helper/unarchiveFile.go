@@ -51,7 +51,7 @@ func UnArchiveByBandizip(fileFullPath, desRootPath string, ignoreUnZipErr bool) 
 	cmdArgs := []string{
 		"x",
 		//"-r",
-		//"-y",
+		"-y",
 		"-o:" + desRootPath,
 		fileFullPath,
 	}
