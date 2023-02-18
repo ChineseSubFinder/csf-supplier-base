@@ -1,2 +1,4 @@
 /.idea
-/pkg/cloudflare_helper/Logs
+*.log
+/cache
+/csf-supplier-config.yaml
