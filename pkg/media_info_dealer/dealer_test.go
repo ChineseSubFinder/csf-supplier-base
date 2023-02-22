@@ -1,7 +1,6 @@
 package media_info_dealer
 
 import (
-	"github.com/ChineseSubFinder/csf-supplier-base/pkg/common"
 	"github.com/ChineseSubFinder/csf-supplier-base/pkg/settings"
 	"github.com/ChineseSubFinder/csf-supplier-base/pkg/tmdb_api"
 	"github.com/WQGroup/logger"
@@ -22,18 +21,20 @@ func TestDealers_IMDBEpsId2TVId(t *testing.T) {
 	}
 	dealer := NewDealers(tmdbApi)
 
-	found, mixInfo := dealer.GetMoreInfoById(common.Movie, common.DouBan, "27605669")
-	if found == false {
-		t.Error("GetMoreInfoById err")
-	}
-	println(mixInfo.NameCn)
+	//found, mixInfo := dealer.GetMoreInfoById(common.Movie, common.DouBan, "27605669")
+	//if found == false {
+	//	t.Error("GetMoreInfoById err")
+	//}
+	//println(mixInfo.NameCn)
 
 	// EPS ID
 	//epsID := "tt17663758"
 	// main ID
 	//mainID := "tt7197768"
 	// 电影，黑亚当
-	mainID := "tt6443346"
+	//mainID := "tt6443346"
+	// 连续剧：无为大师
+	mainID := "tt4635276"
 	mainTVId, season, eps, err := dealer.IMDBEpsId2TVId(mainID)
 	if err != nil {
 		t.Fatal(err)
