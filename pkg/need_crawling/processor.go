@@ -49,7 +49,7 @@ func Movie(dealer *media_info_dealer.Dealers, imdbId string, isHotToday, isTop b
 	j2YearsDate := airDate.AddDate(2, 0, 0)
 
 	if j2YearsDate.After(time.Now()) == true {
-
+		// 两年内的
 		if isHotToday == true {
 			// 如果是今日热门
 			jugTime := time.Duration(config.MovieConfig.IsHot) * time.Minute
