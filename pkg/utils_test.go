@@ -144,3 +144,14 @@ func TestWriteFile(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+func TestUploadFile2R2(t *testing.T) {
+
+	uploadUrl := ""
+	uploadFile := "C:\\temp\\英_2.ass"
+
+	err := UploadFile2R2(uploadUrl, uploadFile)
+	if err != nil {
+		t.Fatal(err)
+	}
+}

@@ -101,6 +101,30 @@ func (c CloudFlareHelper) GenerateDownloadUrl(r2StoreKey string) (string, error)
 	return preSignedHTTPRequest.URL, nil
 }
 
+// GenerateUploadUrl 生成临时上传的 url
+func (c CloudFlareHelper) GenerateUploadUrl(r2StoreKey string, limitUploadFileSize int64) (string, error) {
+
+	uploadTTL := c.cloudFlareConfig.UploadFileTTL
+	if uploadTTL <= 0 {
+		uploadTTL = 600
+	} else if uploadTTL >= 1800 {
+		uploadTTL = 600
+	}
+
+	preSignedHTTPRequest, err := c.preSignClient.PresignPutObject(context.TODO(), &s3.PutObjectInput{
+		Bucket:        aws.String(c.cloudFlareConfig.BucketName),
+		Key:           aws.String(r2StoreKey),
+		ContentLength: limitUploadFileSize,
+	}, func(options *s3.PresignOptions) {
+		options.Expires = time.Duration(uploadTTL) * time.Second
+	})
+	if err != nil {
+		return "", err
+	}
+
+	return preSignedHTTPRequest.URL, nil
+}
+
 func (c CloudFlareHelper) DeleteAllFile() error {
 
 	times := 0

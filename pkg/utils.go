@@ -7,8 +7,10 @@ import (
 	"github.com/ChineseSubFinder/csf-supplier-base/pkg/common"
 	"github.com/ChineseSubFinder/csf-supplier-base/pkg/regex_things"
 	"github.com/WQGroup/logger"
+	"github.com/go-resty/resty/v2"
 	"github.com/pkg/errors"
 	"io"
+	"io/ioutil"
 	"math"
 	"os"
 	"path/filepath"
@@ -332,4 +334,28 @@ func JugRetryTimes(times int) {
 	if times > 100 {
 		logger.Panicln("retry time to many, break", times)
 	}
+}
+
+// UploadFile2R2 使用 resty 包，进行文件的上传到 R2 上
+func UploadFile2R2(uploadURL string, filePath string) error {
+
+	client := resty.New()
+	fileBytes, err := ioutil.ReadFile(filePath)
+	if err != nil {
+		return err
+	}
+
+	resp, err := client.R().
+		SetBody(fileBytes).
+		SetContentLength(true).
+		Put(uploadURL)
+	if err != nil {
+		return err
+	}
+
+	if resp != nil && len(resp.Body()) > 0 {
+		return errors.New(string(resp.Body()))
+	}
+
+	return nil
 }

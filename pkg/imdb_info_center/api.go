@@ -70,3 +70,41 @@ func MovieIsRecent2Years(imdbId string) bool {
 
 	return false
 }
+
+func GetYearInfo(imdbId string) (bool, YearInfo) {
+
+	var tbs []models2.TitleBasic
+	dao.Get().Where("tconst = ?", imdbId).Find(&tbs)
+	if len(tbs) == 0 {
+		return false, YearInfo{}
+	}
+
+	return true, YearInfo{tbs[0].StartYear, tbs[0].EndYear}
+}
+
+type YearInfo struct {
+	Start string
+	End   string
+}
+
+func (y YearInfo) StartYear() int {
+	if y.Start == "" {
+		return 0
+	}
+	parseTime, err := now.Parse(y.Start)
+	if err != nil {
+		return 0
+	}
+	return parseTime.Year()
+}
+
+func (y YearInfo) EndYear() int {
+	if y.End == "" {
+		return 0
+	}
+	parseTime, err := now.Parse(y.End)
+	if err != nil {
+		return 0
+	}
+	return parseTime.Year()
+}
