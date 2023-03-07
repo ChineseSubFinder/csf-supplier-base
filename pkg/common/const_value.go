@@ -9,3 +9,7 @@ const (
 	TimeFormatPoint3 = "15:04:05,000"
 	TimeFormatPoint4 = "15:04:05,0000"
 )
+
+const (
+	FileBDMV = "id.bdmv" // 蓝光文件，CERTIFICATE 这个中的
+)

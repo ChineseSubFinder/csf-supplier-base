@@ -1,8 +1,10 @@
 package pkg
 
 import (
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/common"
 	PTN "github.com/middelink/go-parse-torrent-name"
 	"net/url"
+	"path/filepath"
 	"regexp"
 	"strings"
 )
@@ -45,6 +47,23 @@ func GetDouBanIdFromDouBanUrl(inUrl string) string {
 	id := strings.ReplaceAll(nowPath, "subject", "")
 	id = strings.Trim(id, "/")
 	return id
+}
+
+// IsFakeBDMVWorked 传入的是伪造的不存在的蓝光结构的视频全路径，如果是就返回 true 和 id.bdmv 的绝对路径 和 STREAM 绝对路径
+func IsFakeBDMVWorked(fakseVideFPath string) (bool, string, string) {
+
+	rootDir := filepath.Dir(fakseVideFPath)
+
+	CERDir := filepath.Join(rootDir, "CERTIFICATE")
+	BDMVDir := filepath.Join(rootDir, "BDMV")
+	STREAMDir := filepath.Join(BDMVDir, "STREAM")
+	idBDMVFPath := filepath.Join(CERDir, common.FileBDMV)
+
+	if IsDir(CERDir) == true && IsDir(BDMVDir) == true && IsFile(idBDMVFPath) == true {
+		return true, idBDMVFPath, STREAMDir
+	}
+
+	return false, "", ""
 }
 
 const (
