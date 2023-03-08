@@ -4,8 +4,7 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"github.com/ChineseSubFinder/ChineseSubFinder/pkg"
-	"github.com/ChineseSubFinder/ChineseSubFinder/pkg/decode"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg"
 	"github.com/ChineseSubFinder/csf-supplier-base/pkg/common"
 	"github.com/ChineseSubFinder/csf-supplier-base/pkg/language"
 	"github.com/ChineseSubFinder/csf-supplier-base/pkg/sub_parser_hub"
@@ -270,7 +269,7 @@ func (f *FFMPEGHelper) ExportVideoHLSAndSubByTimeRange(videoFullPath string, sub
 	// 导出视频
 	if pkg.IsFile(videoFullPath) == false {
 
-		bok, _, steamDirPath := decode.IsFakeBDMVWorked(videoFullPath)
+		bok, _, steamDirPath := pkg.IsFakeBDMVWorked(videoFullPath)
 		if bok == true {
 			// 需要从 steamDirPath 搜索最大的一个文件出来
 			videoFullPath = pkg.GetMaxSizeFile(steamDirPath)

@@ -359,3 +359,47 @@ func UploadFile2R2(uploadURL string, filePath string) error {
 
 	return nil
 }
+
+// ClearFolder 清空文件夹
+func ClearFolder(folderFullPath string) error {
+	pathSep := string(os.PathSeparator)
+	files, err := os.ReadDir(folderFullPath)
+	if err != nil {
+		return err
+	}
+	for _, curFile := range files {
+		fullPath := folderFullPath + pathSep + curFile.Name()
+		if curFile.IsDir() {
+			err = os.RemoveAll(fullPath)
+			if err != nil {
+				return err
+			}
+		} else {
+			// 这里就是文件了
+			err = os.Remove(fullPath)
+			if err != nil {
+				return err
+			}
+		}
+	}
+
+	return nil
+}
+
+func GetMaxSizeFile(path string) string {
+	files, err := ioutil.ReadDir(path)
+	if err != nil {
+		return ""
+	}
+	var maxFile os.FileInfo
+	for _, file := range files {
+		if maxFile == nil {
+			maxFile = file
+		} else {
+			if file.Size() > maxFile.Size() {
+				maxFile = file
+			}
+		}
+	}
+	return filepath.Join(path, maxFile.Name())
+}
