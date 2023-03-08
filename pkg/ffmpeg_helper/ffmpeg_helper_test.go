@@ -19,12 +19,13 @@ func TestGetFFMPEGInfo(t *testing.T) {
 	videoFile := unit_test_helper.GetTestDataResourceRootPath([]string{"ffmpeg", "org"}, 3, false)
 	videoFile = filepath.Join(videoFile, "sampleVideo.mp4")
 
+	videoFile = "X:\\连续剧\\瑞克和莫蒂 (2013)\\Season 6\\Rick and Morty - S06E10 - Ricktional Mortpoon's Rickmas Mortcation WEBDL-1080p.mkv"
 	if pkg.IsFile(videoFile) == false {
 		t.Fatal("video file not exist")
 	}
 
-	f := NewFFMPEGHelper(logger.GetLogger(), Wav)
-	bok, ffmpegInfo, err := f.ExportFFMPEGInfo(videoFile, Audio)
+	f := NewFFMPEGHelper(logger.GetLogger())
+	bok, ffmpegInfo, err := f.ExportFFMPEGInfo(videoFile, Audio, Wav)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -67,7 +68,7 @@ func TestParseJsonString2GetFFMPEGInfo(t *testing.T) {
 			want: true, subsFilter: 2, audiosFilter: 1, subsFull: 2, audiosFull: 3},
 	}
 
-	f := NewFFMPEGHelper(logger.GetLogger(), PCM)
+	f := NewFFMPEGHelper(logger.GetLogger())
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -100,7 +101,7 @@ func TestExportAudioArgsByTimeRange(t *testing.T) {
 	startTimeString := "0:0:27"
 	timeLeng := "28.2"
 
-	f := NewFFMPEGHelper(logger.GetLogger(), PCM)
+	f := NewFFMPEGHelper(logger.GetLogger())
 
 	_, _, timeRange, err := f.ExportAudioAndSubArgsByTimeRange(audioFullPath, subFullPath, startTimeString, timeLeng)
 	if err != nil {
@@ -114,7 +115,7 @@ func TestGetAudioInfo(t *testing.T) {
 	testDataPath := unit_test_helper.GetTestDataResourceRootPath([]string{"ffmpeg", "org"}, 4, false)
 	audioFullPath := filepath.Join(testDataPath, "sampleAudio.wav")
 
-	f := NewFFMPEGHelper(logger.GetLogger(), PCM)
+	f := NewFFMPEGHelper(logger.GetLogger())
 	bok, duration, err := f.ExportAudioDurationInfo(audioFullPath)
 	if err != nil || bok == false {
 		t.Fatal(err)
@@ -143,7 +144,7 @@ func TestExportVideoHLSAndSubByTimeRange(t *testing.T) {
 		"C:\\Tmp\\media\\test\\Chainsaw Man - S01E01 - DOG & CHAINSAW WEBRip-1080p.chinese(简,csf).default.srt",
 	}
 
-	f := NewFFMPEGHelper(logger.GetLogger(), PCM)
+	f := NewFFMPEGHelper(logger.GetLogger())
 	println("Start:", time.Now().Format("2006-01-02 15:04:05"))
 	m3u8, subs, err := f.ExportVideoHLSAndSubByTimeRange(videoFPath, subFPaths, "10", "10", "5.000", outDirPath)
 	if err != nil {

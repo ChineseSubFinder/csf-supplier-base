@@ -14,7 +14,6 @@ import (
 
 type FFMPEGInfo struct {
 	log              *logrus.Logger
-	ExportAudioType  ExportAudioType       // 导出音频的类型
 	VideoFullPath    string                // 视频文件的路径
 	Duration         float64               // 视频的时长
 	AudioInfoList    []AudioInfo           // 内置音频列表
@@ -22,14 +21,13 @@ type FFMPEGInfo struct {
 	ExternalSubInfos []*subparser.FileInfo // 外置字幕列表
 }
 
-func NewFFMPEGInfo(log *logrus.Logger, videoFullPath string, ExportAudioType ExportAudioType) *FFMPEGInfo {
+func NewFFMPEGInfo(log *logrus.Logger, videoFullPath string) *FFMPEGInfo {
 	return &FFMPEGInfo{
 		log:              log,
 		VideoFullPath:    videoFullPath,
 		AudioInfoList:    make([]AudioInfo, 0),
 		SubtitleInfoList: make([]SubtitleInfo, 0),
 		ExternalSubInfos: make([]*subparser.FileInfo, 0),
-		ExportAudioType:  ExportAudioType,
 	}
 }
 
@@ -137,7 +135,7 @@ func (f *FFMPEGInfo) isAudioExported(nowCacheFolder string) bool {
 	newAudioInfos := make([]AudioInfo, 0)
 	for index, audioInfo := range f.AudioInfoList {
 
-		audioFPath := filepath.Join(nowCacheFolder, audioInfo.GetName()+f.ExportAudioType.ExtName())
+		audioFPath := filepath.Join(nowCacheFolder, audioInfo.GetName()+PCM.ExtName())
 		if pkg.IsFile(audioFPath) == true {
 
 			f.AudioInfoList[index].FullPath = audioFPath

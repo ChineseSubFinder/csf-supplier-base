@@ -12,6 +12,7 @@ import (
 	"github.com/ChineseSubFinder/csf-supplier-base/pkg/sub_parser_hub/sub_parser/srt"
 	"os"
 	"os/exec"
+	"path"
 	"path/filepath"
 	"strconv"
 
@@ -22,16 +23,14 @@ import (
 )
 
 type FFMPEGHelper struct {
-	log             *logrus.Logger
-	SubParserHub    *sub_parser_hub.SubParserHub // 字幕内容的解析器
-	exportAudioType ExportAudioType
+	log          *logrus.Logger
+	SubParserHub *sub_parser_hub.SubParserHub // 字幕内容的解析器
 }
 
-func NewFFMPEGHelper(log *logrus.Logger, exportAudioType ExportAudioType) *FFMPEGHelper {
+func NewFFMPEGHelper(log *logrus.Logger) *FFMPEGHelper {
 	return &FFMPEGHelper{
-		log:             log,
-		SubParserHub:    sub_parser_hub.NewSubParserHub(log, ass.NewParser(log), srt.NewParser(log)),
-		exportAudioType: exportAudioType,
+		log:          log,
+		SubParserHub: sub_parser_hub.NewSubParserHub(log, ass.NewParser(log), srt.NewParser(log)),
 	}
 }
 
@@ -53,7 +52,7 @@ func (f *FFMPEGHelper) Version() (string, error) {
 // ExportFFMPEGInfo 获取 视频的 FFMPEG 信息，包含音频和字幕
 // 优先会导出 中、英、日、韩 类型的，字幕如果没有语言类型，则也导出，然后需要额外的字幕语言的判断去辅助标记（读取文件内容）
 // 音频只会导出一个，优先导出 中、英、日、韩 类型的
-func (f *FFMPEGHelper) ExportFFMPEGInfo(videoFileFullPath string, exportType ExportType) (bool, *FFMPEGInfo, error) {
+func (f *FFMPEGHelper) ExportFFMPEGInfo(videoFileFullPath string, exportType ExportType, exportAudioType ExportAudioType) (bool, *FFMPEGInfo, error) {
 
 	const args = "-v error -show_format -show_streams -print_format json"
 	cmdArgs := strings.Fields(args)
@@ -160,7 +159,51 @@ func (f *FFMPEGHelper) ExportFFMPEGInfo(videoFileFullPath string, exportType Exp
 		}
 	}
 
+	if exportAudioType == Wav {
+		// 说明缓存存在，那么判断是否需要从 PCM 转 WAV
+		for _, audioInfo := range ffMPEGInfo.AudioInfoList {
+			err = f.changePCM2Wav(audioInfo.FullPath)
+			if err != nil {
+				return false, nil, err
+			}
+		}
+	}
+
 	return bok, ffMPEGInfo, nil
+}
+
+// changePCM2Wav 将 pcm 转换为 wav
+func (f *FFMPEGHelper) changePCM2Wav(pcmFPath string) error {
+
+	if pkg.IsFile(pcmFPath) == false {
+		return nil
+	}
+
+	if path.Ext(pcmFPath) != PCM.ExtName() {
+		return nil
+	}
+	// 构建转换的参数
+	var audioArgs = make([]string, 0)
+	audioArgs = append(audioArgs, "-ar")
+	audioArgs = append(audioArgs, "16000")
+	audioArgs = append(audioArgs, "-ac")
+	audioArgs = append(audioArgs, "1")
+	audioArgs = append(audioArgs, "-f")
+	audioArgs = append(audioArgs, "s16le")
+
+	audioArgs = append(audioArgs, "-i")
+	audioArgs = append(audioArgs, pcmFPath)
+	// 导出的文件路径
+	outFPath := strings.ReplaceAll(pcmFPath, PCM.ExtName(), Wav.ExtName())
+	audioArgs = append(audioArgs, outFPath)
+
+	execErrorString, err := f.execFFMPEG(audioArgs)
+	if err != nil {
+		f.log.Errorln("changePCM2Wav", execErrorString)
+		return err
+	}
+
+	return nil
 }
 
 // ExportAudioDurationInfo 获取音频的长度信息
@@ -371,8 +414,8 @@ func (f *FFMPEGHelper) parseJsonString2GetFFProbeInfo(videoFileFullPath, inputFF
 		return false, nil, nil
 	}
 
-	ffmpegInfoFlitter := NewFFMPEGInfo(f.log, videoFileFullPath, f.exportAudioType)
-	ffmpegInfoFull := NewFFMPEGInfo(f.log, videoFileFullPath, f.exportAudioType)
+	ffmpegInfoFlitter := NewFFMPEGInfo(f.log, videoFileFullPath)
+	ffmpegInfoFull := NewFFMPEGInfo(f.log, videoFileFullPath)
 
 	// 进行字幕和音频的缓存，优先当然是导出 中、英、日、韩 相关的字幕和音频
 	// 但是如果都没得这些的时候，那么也需要导出至少一个字幕或者音频，用于字幕的校正
@@ -619,15 +662,14 @@ func (f *FFMPEGHelper) getAudioAndSubExportArgs(videoFileFullPath string, ffmpeg
 
 	// 音频导出的参数构建
 	audioArgs = append(audioArgs, "-vn")
-	audioArgs = append(audioArgs, "-f")
-	audioArgs = append(audioArgs, f.exportAudioType.TypeName())
+
 	if len(ffmpegInfo.AudioInfoList) == 0 {
 		// 如果没有，就返回空
 		audioArgs = nil
 	} else {
 		for _, audioInfo := range ffmpegInfo.AudioInfoList {
 			f.addAudioMapArg(&audioArgs, audioInfo.Index,
-				filepath.Join(nowCacheFolderPath, audioInfo.GetName()+f.exportAudioType.ExtName()))
+				filepath.Join(nowCacheFolderPath, audioInfo.GetName()+PCM.ExtName()))
 		}
 	}
 
