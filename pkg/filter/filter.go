@@ -7,12 +7,26 @@ import (
 	"strings"
 )
 
-func SkipFileInfo(curFile os.FileInfo) bool {
+func SkipFileInfo(curFile os.FileInfo, parentFolderName string) bool {
 
+	if strings.HasPrefix(parentFolderName, ".@__thumb") == true {
+		logger.Debugln("curFile is in .@__thumb folder, skip")
+		return true
+
+	}
 	// 跳过不符合的文件，比如 MAC OS 下可能有缓存文件，见 #138
 	if curFile.Size() < 1000 {
-		logger.Debugln("curFile.Size() < 1000:", curFile.Name())
-		return true
+		if curFile.Mode()&os.ModeSymlink != 0 {
+			// 确认是软连接
+			logger.Debugln("curFile is symlink,", curFile.Name())
+			//realPath, err := filepath.EvalSymlinks(fileFullPath)
+			//if err == nil {
+			//	fmt.Println("Path:", realPath)
+			//}
+		} else {
+			logger.Debugln("curFile.Size() < 1000:", curFile.Name())
+			return true
+		}
 	}
 
 	if curFile.Size() == 4096 && strings.HasPrefix(curFile.Name(), "._") == true {

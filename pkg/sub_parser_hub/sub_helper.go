@@ -33,7 +33,7 @@ func SearchMatchedSubFileByDir(inDir string) (*SearchSubResult, error) {
 			return nil
 		}
 		// 这里就是文件了
-		if filter.SkipFileInfo(info) == true {
+		if filter.SkipFileInfo(info, filepath.Base(filepath.Dir(path))) == true {
 			return nil
 		}
 
