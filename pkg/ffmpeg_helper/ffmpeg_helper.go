@@ -22,14 +22,16 @@ import (
 )
 
 type FFMPEGHelper struct {
-	log          *logrus.Logger
-	SubParserHub *sub_parser_hub.SubParserHub // 字幕内容的解析器
+	log             *logrus.Logger
+	SubParserHub    *sub_parser_hub.SubParserHub // 字幕内容的解析器
+	exportAudioType ExportAudioType
 }
 
-func NewFFMPEGHelper(log *logrus.Logger) *FFMPEGHelper {
+func NewFFMPEGHelper(log *logrus.Logger, exportAudioType ExportAudioType) *FFMPEGHelper {
 	return &FFMPEGHelper{
-		log:          log,
-		SubParserHub: sub_parser_hub.NewSubParserHub(log, ass.NewParser(log), srt.NewParser(log)),
+		log:             log,
+		SubParserHub:    sub_parser_hub.NewSubParserHub(log, ass.NewParser(log), srt.NewParser(log)),
+		exportAudioType: exportAudioType,
 	}
 }
 
@@ -369,8 +371,8 @@ func (f *FFMPEGHelper) parseJsonString2GetFFProbeInfo(videoFileFullPath, inputFF
 		return false, nil, nil
 	}
 
-	ffmpegInfoFlitter := NewFFMPEGInfo(f.log, videoFileFullPath)
-	ffmpegInfoFull := NewFFMPEGInfo(f.log, videoFileFullPath)
+	ffmpegInfoFlitter := NewFFMPEGInfo(f.log, videoFileFullPath, f.exportAudioType)
+	ffmpegInfoFull := NewFFMPEGInfo(f.log, videoFileFullPath, f.exportAudioType)
 
 	// 进行字幕和音频的缓存，优先当然是导出 中、英、日、韩 相关的字幕和音频
 	// 但是如果都没得这些的时候，那么也需要导出至少一个字幕或者音频，用于字幕的校正
@@ -617,13 +619,15 @@ func (f *FFMPEGHelper) getAudioAndSubExportArgs(videoFileFullPath string, ffmpeg
 
 	// 音频导出的参数构建
 	audioArgs = append(audioArgs, "-vn")
+	audioArgs = append(audioArgs, "-f")
+	audioArgs = append(audioArgs, f.exportAudioType.TypeName())
 	if len(ffmpegInfo.AudioInfoList) == 0 {
 		// 如果没有，就返回空
 		audioArgs = nil
 	} else {
 		for _, audioInfo := range ffmpegInfo.AudioInfoList {
 			f.addAudioMapArg(&audioArgs, audioInfo.Index,
-				filepath.Join(nowCacheFolderPath, audioInfo.GetName()+extPCM))
+				filepath.Join(nowCacheFolderPath, audioInfo.GetName()+f.exportAudioType.ExtName()))
 		}
 	}
 
@@ -929,9 +933,41 @@ func (f *FFMPEGHelper) GetVideoDuration(videoFileFullPath string) float64 {
 const (
 	codecTypeSub   = "subtitle"
 	codecTypeAudio = "audio"
-	extMP3         = ".mp3"
-	extPCM         = ".pcm"
 )
+
+type ExportAudioType int
+
+const (
+	MP3 ExportAudioType = iota + 1
+	PCM
+	Wav
+)
+
+func (e ExportAudioType) TypeName() string {
+	switch e {
+	case MP3:
+		return "mp3"
+	case PCM:
+		return "pcm"
+	case Wav:
+		return "wav"
+	default:
+		return ""
+	}
+}
+
+func (e ExportAudioType) ExtName() string {
+	switch e {
+	case MP3:
+		return ".mp3"
+	case PCM:
+		return ".pcm"
+	case Wav:
+		return ".wav"
+	default:
+		return ""
+	}
+}
 
 type ExportType int
 
