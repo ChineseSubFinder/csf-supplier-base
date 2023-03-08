@@ -52,6 +52,46 @@ func SearchMatchedSubFileByDir(inDir string) (*SearchSubResult, error) {
 	return result, err
 }
 
+// SearchMatchedSubFileByOneVideo 搜索这个视频当前目录下匹配的字幕
+func SearchMatchedSubFileByOneVideo(oneVideoFullPath string) (*SearchSubResult, error) {
+
+	dir := filepath.Dir(oneVideoFullPath)
+	fileName := filepath.Base(oneVideoFullPath)
+	fileName = strings.ToLower(fileName)
+	fileName = strings.ReplaceAll(fileName, filepath.Ext(fileName), "")
+
+	result := NewSearchSubResult()
+	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
+
+		if info.IsDir() == true {
+			return nil
+		}
+		// 这里就是文件了
+		if filter.SkipFileInfo(info, filepath.Base(filepath.Dir(path))) == true {
+			return nil
+		}
+		// 判断的时候用小写的，后续重命名的时候用原有的名称
+		nowFileName := strings.ToLower(info.Name())
+
+		// 字幕文件名应该包含 视频文件名（无后缀）
+		if strings.HasPrefix(nowFileName, fileName) == false {
+			return nil
+		}
+		switch IsSubExtWanted(filepath.Ext(info.Name())) {
+		case common.Characters:
+			result.Add(common.Characters, path)
+		case common.Picture:
+			result.Add(common.Picture, path)
+		case common.BluRay:
+			result.Add(common.BluRay, path)
+		}
+
+		return nil
+	})
+
+	return result, err
+}
+
 type SearchSubResult struct {
 	charactersSubtitles []string
 	picturesSubtitles   []string

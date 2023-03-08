@@ -1,8 +1,7 @@
 package ffmpeg_helper
 
 import (
-	"github.com/ChineseSubFinder/ChineseSubFinder/pkg"
-	"github.com/ChineseSubFinder/ChineseSubFinder/pkg/sub_helper"
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg"
 	"github.com/ChineseSubFinder/csf-supplier-base/pkg/common"
 	"github.com/ChineseSubFinder/csf-supplier-base/pkg/sub_parser_hub"
 	subparser "github.com/ChineseSubFinder/csf-supplier-base/pkg/sub_parser_hub/sub_parser"
@@ -182,13 +181,14 @@ func (f *FFMPEGInfo) isSubExported(nowCacheFolder string) bool {
 	return true
 }
 
-// GetExternalSubInfos 获取外置的字幕信息
+// GetExternalSubInfos 获取外置的字幕信息，这里只考虑字符类型的字幕
 func (f *FFMPEGInfo) GetExternalSubInfos(subParserHub *sub_parser_hub.SubParserHub) error {
-	subFiles, err := sub_helper.SearchMatchedSubFileByOneVideo(f.log, f.VideoFullPath)
+
+	searchSubResult, err := sub_parser_hub.SearchMatchedSubFileByOneVideo(f.VideoFullPath)
 	if err != nil {
 		return err
 	}
-	for _, subFile := range subFiles {
+	for _, subFile := range searchSubResult.Get(common.Characters) {
 		bok, subInfo, err := subParserHub.DetermineFileTypeFromFile(subFile, 0)
 		if err != nil {
 			return err
