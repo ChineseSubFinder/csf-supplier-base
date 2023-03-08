@@ -403,3 +403,7 @@ func GetMaxSizeFile(path string) string {
 	}
 	return filepath.Join(path, maxFile.Name())
 }
+
+func UnixTime2Time(unixTime int64) time.Time {
+	return time.Unix(unixTime, 0)
+}

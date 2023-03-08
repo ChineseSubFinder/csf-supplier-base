@@ -19,7 +19,7 @@ func TestGetFFMPEGInfo(t *testing.T) {
 	// TODO: make a video with ffmpeg on each test
 	// https://gist.github.com/SeunghoonBaek/f35e0fd3db80bf55c2707cae5d0f7184
 	// http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4
-	videoFile := unit_test_helper.GetTestDataResourceRootPath([]string{"ffmpeg", "org"}, 4, false)
+	videoFile := unit_test_helper.GetTestDataResourceRootPath([]string{"ffmpeg", "org"}, 2, false)
 	videoFile = filepath.Join(videoFile, "sampleVideo.mp4")
 	f := NewFFMPEGHelper(log_helper.GetLogger4Tester())
 	bok, ffmpegInfo, err := f.ExportFFMPEGInfo(videoFile, Audio)
