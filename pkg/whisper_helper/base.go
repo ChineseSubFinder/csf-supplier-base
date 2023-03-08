@@ -4,13 +4,17 @@ type SendTask struct {
 	TaskID     int    `json:"task_id"`
 	InputAudio string `json:"input_audio"`
 	Language   string `json:"language"`
-	TaskStatus string `json:"task_status"` // 0 "pending", 1 "running", 2 "finished", 3 "error"
+	TaskStatus int    `json:"task_status"` // 0 "pending", 1 "running", 2 "finished", 3 "error"
 }
 
-type Rep struct {
+type SendTaskReply struct {
 	Code   int    `json:"code"`
 	Msg    string `json:"msg"`
-	Status string `json:"status"`
+	Status int    `json:"status"`
+}
+
+func (s SendTaskReply) GetTaskStatus() TaskStatus {
+	return TaskStatus(s.Status)
 }
 
 type WhisperResult struct {
@@ -28,6 +32,31 @@ type WhisperResult struct {
 		NoSpeechProb     float64 `json:"no_speech_prob"`
 	} `json:"segments"`
 	Language string `json:"language"`
+}
+
+// TaskStatus 任务状态的枚举类
+type TaskStatus int
+
+const (
+	TaskStatusPending TaskStatus = iota + 1
+	TaskStatusRunning
+	TaskStatusFinished
+	TaskStatusError
+)
+
+func (t TaskStatus) String() string {
+	switch t {
+	case TaskStatusPending:
+		return "pending"
+	case TaskStatusRunning:
+		return "running"
+	case TaskStatusFinished:
+		return "finished"
+	case TaskStatusError:
+		return "error"
+	default:
+		return "unknown"
+	}
 }
 
 /*
