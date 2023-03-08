@@ -17,7 +17,8 @@ func (s SendTaskReply) GetTaskStatus() TaskStatus {
 	return TaskStatus(s.Status)
 }
 
-type WhisperResult struct {
+// WhisperJsonResult whisper transcribe 的结果
+type WhisperJsonResult struct {
 	Text     string `json:"text"`
 	Segments []struct {
 		Id               int     `json:"id"`
