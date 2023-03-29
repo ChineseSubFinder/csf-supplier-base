@@ -13,8 +13,8 @@ import (
 )
 
 type SubtitleInfo struct {
-	SubSha256            string  `gorm:"column:sub_sha256;type:char(64);primarykey"`                                             // 文件的 SHA256
-	ImdbId               string  `gorm:"column:imdb_id;type:char(20);not null"`                                                  // IMDB ID，电影的 IMDB ID，电视剧的主 IMDB ID
+	SubSha256            string  `gorm:"column:sub_sha256;type:char(64)"`                                                        // 文件的 SHA256
+	ImdbId               string  `gorm:"column:imdb_id;type:char(20);index;not null"`                                            // IMDB ID，电影的 IMDB ID，电视剧的主 IMDB ID
 	Title                string  `gorm:"column:title;type:varchar(255);not null" json:"title"`                                   // 字幕标题
 	Language             int     `gorm:"column:language;type:int;not null"`                                                      // 字幕语言,MyLanguage 参考内部的这个值
 	SaveRelativePath     string  `gorm:"column:save_relative_path;type:varchar(255);not null" json:"save_relative_path"`         // 保存的相对路径，包含文件名，会处理后一定是一个具体的字幕文件 /movie/2020/12/12/177838.srt
