@@ -58,6 +58,20 @@ func (l MyLanguage) HasChinese() bool {
 	}
 }
 
+// HasChineseLanguageList 返回所有包含中文的语言列表
+func HasChineseLanguageList() []MyLanguage {
+	return []MyLanguage{
+		ChineseSimple,
+		ChineseTraditional,
+		ChineseSimpleEnglish,
+		ChineseTraditionalEnglish,
+		ChineseSimpleJapanese,
+		ChineseTraditionalJapanese,
+		ChineseSimpleKorean,
+		ChineseTraditionalKorean,
+	}
+}
+
 const (
 	MathLangChnUnknown = "未知语言"
 	MatchLangDouble    = "双语"
