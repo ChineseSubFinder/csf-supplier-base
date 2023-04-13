@@ -34,7 +34,9 @@ func TestDealers_IMDBEpsId2TVId(t *testing.T) {
 	// 电影，黑亚当
 	//mainID := "tt6443346"
 	// 连续剧：无为大师
-	mainID := "tt4635276"
+	//mainID := "tt4635276"
+	// 连续剧：危险关系
+	mainID := "tt14792896"
 	mainTVId, season, eps, err := dealer.IMDBEpsId2TVId(mainID)
 	if err != nil {
 		t.Fatal(err)
