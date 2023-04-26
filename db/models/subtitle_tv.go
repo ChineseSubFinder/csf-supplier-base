@@ -4,11 +4,11 @@ import "gorm.io/gorm"
 
 type SubtitleTV struct {
 	gorm.Model
-	IsFullSeason     bool   `gorm:"column:is_full_season;type:tinyint(1);not null;default:0" json:"is_full_season"` // 是否是全季字幕，那么多个字幕会分开多个存储
-	FullSeasonSha256 string `gorm:"column:full_season_sha256;type:char(64)"`                                        // 一整季压缩包文件的 SHA256
-	Season           int    `gorm:"column:season;type:int;index;not null"`                                          // 如果无法识别就是 -1
-	Episode          int    `gorm:"column:episode;type:int;not null"`                                               // 如果无法识别就是 -1
-	CantParseName    bool   `gorm:"column:cant_parse_name;type:tinyint(1);not null;default:0"`                      // 是否无法识别字幕的名字提取 Season 和 Episode 信息
+	IsFullSeason     bool   `gorm:"column:is_full_season;type:tinyint(1);index;not null;default:0" json:"is_full_season"` // 是否是全季字幕，那么多个字幕会分开多个存储
+	FullSeasonSha256 string `gorm:"column:full_season_sha256;type:char(64);index"`                                        // 一整季压缩包文件的 SHA256
+	Season           int    `gorm:"column:season;type:int;index;not null"`                                                // 如果无法识别就是 -1
+	Episode          int    `gorm:"column:episode;type:int;index;not null"`                                               // 如果无法识别就是 -1
+	CantParseName    bool   `gorm:"column:cant_parse_name;type:tinyint(1);not null;default:0"`                            // 是否无法识别字幕的名字提取 Season 和 Episode 信息
 	SubtitleInfo     `gorm:"embedded"`
 }
 
