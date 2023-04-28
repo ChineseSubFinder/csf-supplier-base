@@ -43,3 +43,11 @@ type MarkUploadTVSubsDoneResp struct {
 	Success bool   `json:"success"` // 是否成功
 	Message string `json:"message"` // 如果失败的原因
 }
+
+type GetGenerateUploadURLReq struct {
+	IsMovie    bool   `json:"is_movie"` // 是电影还是连续剧
+	VideoFPath string `json:"video_f_path"`
+	SubFPath   string `json:"sub_f_path"`
+	Season     int    `json:"season"`
+	Episode    int    `json:"episode"`
+}
