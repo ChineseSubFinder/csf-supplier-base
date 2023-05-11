@@ -14,10 +14,11 @@ type UserCenter struct {
 }
 
 type KeyInfo struct {
-	ActiveTime         int64 `gorm:"column:active_time;type:bigint;not null"`                  // 什么时候激活的，续期的时候，这个时间也会更新
-	ExpirationTime     int64 `gorm:"column:expiration_time;type:bigint;not null"`              // 过期时间（具体那个时间），如果过期，那么这个 API Key 就无法使用
-	DailyDownloadLimit int   `gorm:"column:daily_download_limit;type:int;not null;default:50"` // 每天的下载限制
-	DailyUploadLimit   int   `gorm:"column:daily_upload_limit;type:int;not null;default:50"`   // 每天的上传限制
+	ActiveTime                   int64 `gorm:"column:active_time;type:bigint;not null"`                            // 什么时候激活的，续期的时候，这个时间也会更新
+	ExpirationTime               int64 `gorm:"column:expiration_time;type:bigint;not null"`                        // 过期时间（具体那个时间），如果过期，那么这个 API Key 就无法使用
+	DailyDownloadLimit           int   `gorm:"column:daily_download_limit;type:int;not null;default:50"`           // 每天的下载限制
+	DailyUploadLimit             int   `gorm:"column:daily_upload_limit;type:int;not null;default:50"`             // 每天的上传限制
+	DailyMachineTranslationLimit int   `gorm:"column:daily_machine_translation_limit;type:int;not null;default:0"` // 每天的机翻限制
 }
 
 func NewUserCenter(telegramUserID int64, apikey string) *UserCenter {
