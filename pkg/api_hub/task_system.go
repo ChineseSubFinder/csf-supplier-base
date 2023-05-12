@@ -27,7 +27,7 @@ type AddMachineTranslationTaskPackageReq struct {
 	Episode int    `json:"episode"`  // 连续剧则是 -1
 
 	IsAudioOrSRT bool   `json:"is_audio_or_srt"` // 是音频还是字幕
-	SubSha256    string `json:"sub_sha256"`      // 文件的 SHA256
+	FileSha256   string `json:"file_sha256"`     // 文件的 SHA256
 	FileName     string `json:"file_name"`       // 文件的名称
 	FileSize     int    `json:"file_size"`       // 文件大小，单位：字节
 
@@ -43,4 +43,18 @@ type AddMachineTranslationTaskPackageResp struct {
 	Message       string `json:"message"`         // 任务的状态信息
 	TaskPackageId string `json:"task_package_id"` // 任务包的ID
 	UploadURL     string `json:"upload_url"`      // 上传文件的URL
+	Token         string `json:"token"`           // 针对这次任务的 token，需要使用来标记已经完成任务
+}
+
+// ----------------------------------------------
+
+type MarkFirstPackageTaskDoneReq struct {
+	TaskPackageId string `json:"task_package_id"` // 任务包的ID
+	ApiKey        string `json:"api_key"`         // 身份密钥
+}
+
+// ----------------------------------------------
+
+type MarkOneTaskDoneReq struct {
+	ApiKey string `json:"api_key"` // 身份密钥
 }

@@ -12,3 +12,9 @@ type TaskInfo struct {
 	FinishDataRPath string   `gorm:"column:finish_data_r_path;type:varchar(255);not null"`  // 这个任务完成后，存储的数据的相对路径，相对于 R2 存储
 	DataVersion     string   `gorm:"column:data_version;type:varchar(255);not null"`        // 任务数据的版本
 }
+
+func NewTaskInfo(taskType TaskType, packageID string,
+	taskIndex int, status Status, dataVersion string) *TaskInfo {
+	return &TaskInfo{TaskType: taskType, PackageID: packageID,
+		TaskIndex: taskIndex, Status: status, DataVersion: dataVersion}
+}

@@ -4,8 +4,9 @@ package task_system
 type Status int
 
 const (
+	NoUploaded Status = iota + 1
 	// NoAudited 任务状态：未审核
-	NoAudited Status = iota + 1
+	NoAudited
 	// NotStart 任务状态：未开始
 	NotStart
 	// Running 任务状态：进行中
