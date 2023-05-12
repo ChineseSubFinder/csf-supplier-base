@@ -50,6 +50,7 @@ type AddMachineTranslationTaskPackageResp struct {
 
 type MarkFirstPackageTaskDoneReq struct {
 	TaskPackageId string `json:"task_package_id"` // 任务包的ID
+	Token         string `json:"token"`           // 针对这次任务的 token，需要使用来标记已经完成任务
 	ApiKey        string `json:"api_key"`         // 身份密钥
 }
 
