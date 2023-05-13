@@ -10,11 +10,17 @@ type GetOneTaskReq struct {
 
 // GetOneTaskResp 获取一个任务的响应
 type GetOneTaskResp struct {
-	Status          int                  `json:"status"`                 // 任务的状态 0 失败，1 成功
-	Message         string               `json:"message"`                // 任务的状态信息
-	TaskType        task_system.TaskType `json:"task_type"`              // 任务的类型
-	DataDownloadUrl string               `json:"task_data_download_url"` // 任务数据的下载地址
-	DataVersion     string               `json:"task_data_version"`      // 任务数据的版本
+	Status              int                  `json:"status"`                 // 任务的状态 0 失败，1 成功
+	Message             string               `json:"message"`                // 任务的状态信息
+	TaskType            task_system.TaskType `json:"task_type"`              // 任务的类型
+	SrcDataDownloadUrl  string               `json:"src_data_download_url"`  // 任务数据的下载地址
+	FinishDataUploadUrl string               `json:"finish_data_upload_url"` // 任务数据的上传地址
+	Token               string               `json:"token"`                  // 任务的 token
+	DataVersion         string               `json:"task_data_version"`      // 任务数据的版本
+}
+
+type SetOneTaskDoneReq struct {
+	ApiKey string `json:"api_key"` // 身份密钥
 }
 
 // ----------------------------------------------
@@ -46,16 +52,10 @@ type AddMachineTranslationTaskPackageResp struct {
 	Token         string `json:"token"`           // 针对这次任务的 token，需要使用来标记已经完成任务
 }
 
-// ----------------------------------------------
-
-type MarkFirstPackageTaskDoneReq struct {
+type SetFirstPackageTaskDoneReq struct {
 	TaskPackageId string `json:"task_package_id"` // 任务包的ID
 	Token         string `json:"token"`           // 针对这次任务的 token，需要使用来标记已经完成任务
 	ApiKey        string `json:"api_key"`         // 身份密钥
 }
 
 // ----------------------------------------------
-
-type MarkOneTaskDoneReq struct {
-	ApiKey string `json:"api_key"` // 身份密钥
-}

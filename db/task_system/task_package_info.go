@@ -1,9 +1,14 @@
 package task_system
 
-import "gorm.io/gorm"
+import (
+	"time"
+)
 
 type TaskPackageInfo struct {
-	gorm.Model
+	ID        int64     `gorm:"column:id;type:bigint;primary_key;auto_increment;not null"` // 任务的 ID
+	CreatedAt time.Time `gorm:"column:created_at;type:datetime;index;not null"`            // 任务创建的时间
+	UpdatedAt time.Time `gorm:"column:updated_at;type:datetime;index;not null"`            // 任务更新的时间
+
 	ImdbId         string `gorm:"column:imdb_id;type:char(20);index;not null"` // IMDB ID
 	IsMovie        bool   `gorm:"column:is_movie;type:tinyint(1);index;not null;default:0"`
 	Season         int    `gorm:"column:season;type:int;index;not null"`
