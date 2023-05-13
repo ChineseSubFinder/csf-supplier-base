@@ -15,3 +15,19 @@ const (
 	// MergeSubtitle 任务类型：合并翻译后的字幕
 	MergeSubtitle
 )
+
+// ToString 将任务类型转换为字符串
+func (t TaskType) ToString() string {
+	switch t {
+	case AudioToSubtitle:
+		return "AudioToSubtitle"
+	case SplitSubtitle:
+		return "SplitSubtitle"
+	case Translation:
+		return "Translation"
+	case MergeSubtitle:
+		return "MergeSubtitle"
+	default:
+		return "NoType"
+	}
+}

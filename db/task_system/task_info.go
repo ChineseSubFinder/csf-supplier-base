@@ -17,6 +17,9 @@ type TaskInfo struct {
 	FinishDataRPath string   `gorm:"column:finish_data_r_path;type:varchar(255);not null"`  // 这个任务完成后，存储的数据的相对路径，相对于 R2 存储
 	FinishDataSize  int      `gorm:"column:finish_data_size;type:int;not null"`             // 这个任务完成后，存储的数据的大小，单位：字节
 
+	PartIndex int `gorm:"column:part_index;type:int;not null"` // 任务的分片索引，从 0 开始
+	PartCount int `gorm:"column:part_count;type:int;not null"` // 任务的分片总数
+
 	DataVersion string `gorm:"column:data_version;type:varchar(255);not null"` // 任务数据的版本
 
 	SrcDataFileUrl    string `gorm:"-" json:"src_data_file_url"`    // 源任务数据的下载 URL
