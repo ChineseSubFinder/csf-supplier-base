@@ -100,3 +100,8 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
+
+replace (
+	github.com/go-creed/sat => github.com/allanpk716/sat v1.0.4
+	github.com/middelink/go-parse-torrent-name => github.com/allanpk716/go-parse-torrent-name v0.0.2
+)
