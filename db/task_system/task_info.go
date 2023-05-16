@@ -14,6 +14,7 @@ type TaskInfo struct {
 	TaskIndex       int      `gorm:"column:task_index;type:int;index;not null"`             // 任务在任务包中的索引, 从 0 开始
 	Status          Status   `gorm:"column:status;type:tinyint unsigned;index;not null"`    // 任务的状态
 	SrcDataRPath    string   `gorm:"column:src_data_r_path;type:varchar(255);not null"`     // 源任务数据的相对路径，相对于 R2 存储
+	SrcDataSize     int      `gorm:"column:src_data_size;type:int;not null"`                // 源任务数据的大小，单位：字节
 	FinishDataRPath string   `gorm:"column:finish_data_r_path;type:varchar(255);not null"`  // 这个任务完成后，存储的数据的相对路径，相对于 R2 存储
 	FinishDataSize  int      `gorm:"column:finish_data_size;type:int;not null"`             // 这个任务完成后，存储的数据的大小，单位：字节
 
@@ -28,6 +29,13 @@ type TaskInfo struct {
 
 func NewTaskInfo(taskType TaskType, packageID string,
 	taskIndex int, status Status, dataVersion string) *TaskInfo {
-	return &TaskInfo{TaskType: taskType, PackageID: packageID,
+	return &TaskInfo{
+		CreatedAt: time.Now(), UpdatedAt: time.Now(),
+		TaskType: taskType, PackageID: packageID,
 		TaskIndex: taskIndex, Status: status, DataVersion: dataVersion}
+}
+
+func (t *TaskInfo) SetStatus(status Status) {
+	t.Status = status
+	t.UpdatedAt = time.Now()
 }

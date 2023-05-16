@@ -21,6 +21,7 @@ type TaskPackageInfo struct {
 	FileSha256    string `gorm:"column:file_sha256;type:char(64);index;not null"`                 // 文件的 SHA256
 	FileSize      int    `gorm:"column:file_size;type:int;not null"`                              // 文件大小，单位：字节
 	SrcDataRPath  string `gorm:"column:src_data_r_path;type:varchar(255);not null"`               // 源任务数据的相对路径，相对于 R2 存储
+	SrcDataSize   int    `gorm:"column:src_data_size;type:int;not null"`                          // 源任务数据的大小，单位：字节
 	UploadFileUrl string `gorm:"-" json:"upload_file_url"`                                        // 上传文件的 URL
 	Token         string `gorm:"-" json:"token"`                                                  // 缓存的 token信息
 
@@ -35,10 +36,16 @@ func NewTaskPackageInfo(imdbId string, isMovie bool,
 	isAudioOrSRT bool, fileSha256 string, fileSize int,
 	audioSrcLanguage string, translatedLanguage string) *TaskPackageInfo {
 	return &TaskPackageInfo{
+		CreatedAt: time.Now(), UpdatedAt: time.Now(),
 		ImdbId: imdbId, IsMovie: isMovie,
 		Season: season, Episode: episode,
 		TelegramUserID: telegramUserID, PackageID: packageID, Status: status,
 		IsAudioOrSRT: isAudioOrSRT, FileSha256: fileSha256, FileSize: fileSize,
 		AudioSrcLanguage: audioSrcLanguage, TranslatedLanguage: translatedLanguage,
 	}
+}
+
+func (ti *TaskPackageInfo) SetStatus(status Status) {
+	ti.Status = status
+	ti.UpdatedAt = time.Now()
 }
