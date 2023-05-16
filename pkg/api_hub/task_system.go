@@ -20,7 +20,9 @@ type GetOneTaskResp struct {
 }
 
 type SetOneTaskDoneReq struct {
-	ApiKey string `json:"api_key"` // 身份密钥
+	TaskType task_system.TaskType `json:"task_type"` // 任务的类型
+	Token    string               `json:"token"`     // 任务的 token
+	ApiKey   string               `json:"api_key"`   // 身份密钥
 }
 
 // ----------------------------------------------
@@ -56,6 +58,29 @@ type SetFirstPackageTaskDoneReq struct {
 	TaskPackageId string `json:"task_package_id"` // 任务包的ID
 	Token         string `json:"token"`           // 针对这次任务的 token，需要使用来标记已经完成任务
 	ApiKey        string `json:"api_key"`         // 身份密钥
+}
+
+// ----------------------------------------------
+
+// ConfirmSplitTaskInfoReq 确认分割任务的信息
+type ConfirmSplitTaskInfoReq struct {
+	Token           string `json:"token"`             // 针对这次任务的 token
+	SrcDataSizes    []int  `json:"src_data_sizes"`    // 每个分割后的文件的大小
+	FinishDataSizes []int  `json:"finish_data_sizes"` // 每个分割后的文件的大小
+	ApiKey          string `json:"api_key"`           // 身份密钥
+}
+
+type GetOneSplitPartUploadURLReq struct {
+	Token     string `json:"token"`      // 针对这次任务的 token
+	PartIndex int    `json:"part_index"` // 分割后的文件的索引 任务的分片索引，从 0 开始
+	PartCount int    `json:"part_count"` // 分割后的文件的总数
+	ApiKey    string `json:"api_key"`    // 身份密钥
+}
+
+type GetOneSplitPartUploadURLResp struct {
+	Status    int    `json:"status"`     // 任务的状态 0 失败，1 成功
+	Message   string `json:"message"`    // 任务的状态信息
+	UploadUrl string `json:"upload_url"` // 上传文件的URL
 }
 
 // ----------------------------------------------
