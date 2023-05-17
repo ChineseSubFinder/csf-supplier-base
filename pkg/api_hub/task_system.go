@@ -107,7 +107,7 @@ type GetAllMergeTaskReq struct {
 	ApiKey string `json:"api_key"` // 身份密钥
 }
 
-type GetALlMergeTaskResp struct {
+type GetAllMergeTaskResp struct {
 	Status                       int      `json:"status"`                           // 任务的状态 0 失败，1 成功
 	Message                      string   `json:"message"`                          // 任务的状态信息
 	AllTranslatedDataDownloadUrl []string `json:"all_translated_data_download_url"` // 所有翻译后的数据的下载地址
