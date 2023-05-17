@@ -74,8 +74,8 @@ func (c CloudFlareHelper) GenerateDownloadUrl(r2StoreKey string) (string, error)
 	downloadTTL := c.cloudFlareConfig.DownloadFileTTL
 	if downloadTTL <= 0 {
 		downloadTTL = 60
-	} else if downloadTTL >= 240 {
-		downloadTTL = 240
+	} else if downloadTTL >= 1800 {
+		downloadTTL = 1800
 	}
 
 	preSignedHTTPRequest, err := c.preSignClient.PresignGetObject(context.TODO(), &s3.GetObjectInput{
@@ -108,7 +108,7 @@ func (c CloudFlareHelper) GenerateUploadUrl(r2StoreKey string, limitUploadFileSi
 	if uploadTTL <= 0 {
 		uploadTTL = 600
 	} else if uploadTTL >= 1800 {
-		uploadTTL = 600
+		uploadTTL = 1800
 	}
 
 	preSignedHTTPRequest, err := c.preSignClient.PresignPutObject(context.TODO(), &s3.PutObjectInput{
