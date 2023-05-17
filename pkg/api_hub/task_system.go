@@ -15,6 +15,8 @@ type GetOneTaskResp struct {
 	TaskType            task_system.TaskType `json:"task_type"`              // 任务的类型
 	SrcDataDownloadUrl  string               `json:"src_data_download_url"`  // 任务数据的下载地址
 	FinishDataUploadUrl string               `json:"finish_data_upload_url"` // 任务数据的上传地址
+	AudioSrcLanguage    string               `json:"audio_src_language"`     // 音频的源语言
+	TranslatedLanguage  string               `json:"translated_language"`    // 期望的翻译后的语言
 	Token               string               `json:"token"`                  // 任务的 token
 	DataVersion         string               `json:"task_data_version"`      // 任务数据的版本
 }
@@ -58,6 +60,21 @@ type SetFirstPackageTaskDoneReq struct {
 	TaskPackageId string `json:"task_package_id"` // 任务包的ID
 	Token         string `json:"token"`           // 针对这次任务的 token，需要使用来标记已经完成任务
 	ApiKey        string `json:"api_key"`         // 身份密钥
+}
+
+type GetTaskPackageInfoReq struct {
+	TaskPackageId string `json:"task_package_id"` // 任务包的ID
+	ApiKey        string `json:"api_key"`         // 身份密钥
+}
+
+type GetTaskPackageInfoResp struct {
+	Status                   int                `json:"status"`                      // 任务的状态 0 失败，1 成功
+	Message                  string             `json:"message"`                     // 任务的状态信息
+	TaskPackageStatus        task_system.Status `json:"task_package_status"`         // 任务包的总状态
+	AudioToSubtitleStatus    task_system.Status `json:"audio_to_subtitle_status"`    // 音频转字幕的状态，如果总任务包是上传的字幕，那么这个状态就是完成
+	SplitTaskStatus          task_system.Status `json:"split_task_status"`           // 分割任务的状态
+	TranslationTaskCount     int                `json:"translation_task_count"`      // 翻译任务的总数量
+	TranslationTaskDoneCount int                `json:"translation_task_done_count"` // 翻译任务完成的数量
 }
 
 // ----------------------------------------------

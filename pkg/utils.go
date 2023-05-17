@@ -344,3 +344,29 @@ func GetMaxSizeFile(path string) string {
 	}
 	return filepath.Join(path, maxFile.Name())
 }
+
+// GetFileSha256AndSize 获取文件的名称，文件的 SHA256 以及 文件的大小
+func GetFileSha256AndSize(fileFPath string) (string, string, int, error) {
+
+	if IsFile(fileFPath) == false {
+		return "", "", -1, errors.New("file not exist")
+	}
+	// 获取文件的名称，文件的 SHA256 以及 文件的大小
+	fileName := filepath.Base(fileFPath)
+	fp, err := os.Open(fileFPath)
+	if err != nil {
+		return "", "", -1, err
+	}
+	defer func() {
+		_ = fp.Close()
+	}()
+
+	partAll, err := io.ReadAll(fp)
+	if err != nil {
+		return "", "", -1, err
+	}
+	fileSha256 := fmt.Sprintf("%x", sha256.Sum256(partAll))
+	fileSize := len(partAll)
+
+	return fileName, fileSha256, fileSize, nil
+}
