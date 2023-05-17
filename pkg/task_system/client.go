@@ -10,14 +10,15 @@ import (
 
 type TaskSystemClient struct {
 	client          *resty.Client
-	apiKey          string
+	apiKey          string // subtitle best api key
 	comunicateToken string // 所有包通信时候写在 Authorization 的 Token
 }
 
 func NewTaskSystemClient(apiKey string) *TaskSystemClient {
 	return &TaskSystemClient{
-		client: resty.New(),
-		apiKey: apiKey,
+		client:          resty.New(),
+		apiKey:          apiKey,
+		comunicateToken: "5akwmGAbuFWqgaZf9QwT",
 	}
 }
 
@@ -179,7 +180,8 @@ func (c *TaskSystemClient) CancelTaskPackage(taskPackageID string) (*api_hub.Get
 }
 
 const (
-	serverUrlBase = "https://api.subtitle.best/task-system"
+	//serverUrlBase = "https://api.subtitle.best/task-system/v1"
+	serverUrlBase = "http://127.0.0.1:8888/task-system/v1"
 )
 
 type ReplyCommon struct {
