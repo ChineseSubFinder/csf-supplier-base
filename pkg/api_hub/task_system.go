@@ -21,6 +21,13 @@ type GetOneTaskResp struct {
 	DataVersion         string               `json:"task_data_version"`      // 任务数据的版本
 }
 
+type GetOneTaskFinishDataUploadUrlReq struct {
+	TaskType       task_system.TaskType `json:"task_type"`        // 任务的类型
+	Token          string               `json:"token"`            // 任务的 token
+	FinishDataSize int                  `json:"finish_data_size"` // 任务数据的大小
+	ApiKey         string               `json:"api_key"`          // 身份密钥
+}
+
 type SetOneTaskDoneReq struct {
 	TaskType task_system.TaskType `json:"task_type"` // 任务的类型
 	Token    string               `json:"token"`     // 任务的 token
@@ -81,10 +88,9 @@ type GetTaskPackageInfoResp struct {
 
 // ConfirmSplitTaskInfoReq 确认分割任务的信息
 type ConfirmSplitTaskInfoReq struct {
-	Token           string `json:"token"`             // 针对这次任务的 token
-	SrcDataSizes    []int  `json:"src_data_sizes"`    // 每个分割后的文件的大小
-	FinishDataSizes []int  `json:"finish_data_sizes"` // 每个分割后的文件的大小
-	ApiKey          string `json:"api_key"`           // 身份密钥
+	Token        string `json:"token"`          // 针对这次任务的 token
+	SrcDataSizes []int  `json:"src_data_sizes"` // 每个分割后的文件的大小
+	ApiKey       string `json:"api_key"`        // 身份密钥
 }
 
 type GetOneSplitPartUploadURLReq struct {
