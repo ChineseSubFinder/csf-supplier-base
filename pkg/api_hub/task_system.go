@@ -4,8 +4,9 @@ import "github.com/ChineseSubFinder/csf-supplier-base/db/task_system"
 
 // GetOneTaskReq 获取一个任务的请求
 type GetOneTaskReq struct {
-	TaskType task_system.TaskType `json:"task_type"` // 请求什么类型的任务
-	ApiKey   string               `json:"api_key"`   // 身份密钥
+	TaskType     task_system.TaskType `json:"task_type"`      // 请求什么类型的任务
+	ApiKey       string               `json:"api_key"`        // 身份密钥
+	WorkerApiKey string               `json:"worker_api_key"` // worker 身份密钥
 }
 
 // GetOneTaskResp 获取一个任务的响应
@@ -26,12 +27,14 @@ type GetOneTaskFinishDataUploadUrlReq struct {
 	Token          string               `json:"token"`            // 任务的 token
 	FinishDataSize int                  `json:"finish_data_size"` // 任务数据的大小
 	ApiKey         string               `json:"api_key"`          // 身份密钥
+	WorkerApiKey   string               `json:"worker_api_key"`   // worker 身份密钥
 }
 
 type SetOneTaskDoneReq struct {
-	TaskType task_system.TaskType `json:"task_type"` // 任务的类型
-	Token    string               `json:"token"`     // 任务的 token
-	ApiKey   string               `json:"api_key"`   // 身份密钥
+	TaskType     task_system.TaskType `json:"task_type"`      // 任务的类型
+	Token        string               `json:"token"`          // 任务的 token
+	ApiKey       string               `json:"api_key"`        // 身份密钥
+	WorkerApiKey string               `json:"worker_api_key"` // worker 身份密钥
 }
 
 // ----------------------------------------------
@@ -91,13 +94,15 @@ type ConfirmSplitTaskInfoReq struct {
 	Token        string `json:"token"`          // 针对这次任务的 token
 	SrcDataSizes []int  `json:"src_data_sizes"` // 每个分割后的文件的大小
 	ApiKey       string `json:"api_key"`        // 身份密钥
+	WorkerApiKey string `json:"worker_api_key"` // worker 身份密钥
 }
 
 type GetOneSplitPartUploadURLReq struct {
-	Token     string `json:"token"`      // 针对这次任务的 token
-	PartIndex int    `json:"part_index"` // 分割后的文件的索引 任务的分片索引，从 0 开始
-	PartCount int    `json:"part_count"` // 分割后的文件的总数
-	ApiKey    string `json:"api_key"`    // 身份密钥
+	Token        string `json:"token"`          // 针对这次任务的 token
+	PartIndex    int    `json:"part_index"`     // 分割后的文件的索引 任务的分片索引，从 0 开始
+	PartCount    int    `json:"part_count"`     // 分割后的文件的总数
+	ApiKey       string `json:"api_key"`        // 身份密钥
+	WorkerApiKey string `json:"worker_api_key"` // worker 身份密钥
 }
 
 type GetOneSplitPartUploadURLResp struct {
@@ -109,8 +114,9 @@ type GetOneSplitPartUploadURLResp struct {
 // ----------------------------------------------
 
 type GetAllMergeTaskReq struct {
-	Token  string `json:"token"`   // 针对这次任务的 token
-	ApiKey string `json:"api_key"` // 身份密钥
+	Token        string `json:"token"`          // 针对这次任务的 token
+	ApiKey       string `json:"api_key"`        // 身份密钥
+	WorkerApiKey string `json:"worker_api_key"` // worker 身份密钥
 }
 
 type GetAllMergeTaskResp struct {
