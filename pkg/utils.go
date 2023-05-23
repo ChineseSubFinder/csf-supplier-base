@@ -11,6 +11,7 @@ import (
 	"github.com/pkg/errors"
 	"io"
 	"io/ioutil"
+	"net/http"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -298,6 +299,42 @@ func UploadFile2R2(uploadURL string, filePath string) error {
 		return errors.New(string(resp.Body()))
 	}
 
+	return nil
+}
+
+// DownloadFile 下载文件
+func DownloadFile(destName, tmpDir string, url string) error {
+
+	resp, err := http.Get(url)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		err = fmt.Errorf("non-200 status: %s", resp.Status)
+		return err
+	}
+	// 判断这个目录是否存在，不存在则创建
+	if IsDir(tmpDir) == false {
+		err = os.MkdirAll(tmpDir, 0777)
+		if err != nil {
+			return err
+		}
+	}
+	// create dest
+	dest, err := os.Create(filepath.Join(tmpDir, destName))
+	if err != nil {
+		err = fmt.Errorf("can't create %s: %v", destName, err)
+		return err
+	}
+	_, err = io.Copy(dest, resp.Body)
+	if closeErr := dest.Close(); err == nil {
+		err = closeErr
+	}
+	if err != nil {
+		return err
+	}
 	return nil
 }
 

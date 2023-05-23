@@ -7,8 +7,15 @@ import (
 
 func TestTaskSystemClient_AddMachineTranslationTask(t *testing.T) {
 
-	subtitleAPIKEY := ""
+	subtitleAPIKEY := "WxseROHNxlTYIRQgswwThvgsgodpzYktjJoifEqEHGOHdaXqyjgEcixQyEQHiVccOqmONNkOXaKzPNkNluFQDBtWKzhARDTuttJDtAgxoLSjCQQxNPvaMUFJiOlcgzsP"
 	client := NewTaskSystemClient(subtitleAPIKEY)
+
+	//getTranslatedResult, err := client.GetTranslatedResult("hkWySGaWCCfFcYDYRXkmbrfhrGeQaNwNVmFbmkurTMgEPvPuTIZhpwuORTXGDArc")
+	//if err != nil {
+	//	t.Errorf("GetTranslatedResult error: %v", err)
+	//	return
+	//}
+	//println("getTranslatedResult:", getTranslatedResult.Status, getTranslatedResult.Message)
 
 	imdbID := "tt2861424"
 	isMovie := false
