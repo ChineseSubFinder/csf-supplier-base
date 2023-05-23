@@ -13,9 +13,9 @@ type TaskPackageInfo struct {
 	IsMovie        bool   `gorm:"column:is_movie;type:tinyint(1);index;not null;default:0"`
 	Season         int    `gorm:"column:season;type:int;index;not null"`
 	Episode        int    `gorm:"column:episode;type:int;index;not null"`
-	TelegramUserID int64  `gorm:"column:telegram_user_id;type:bigint;not null;uniqueIndex;"` // Telegram 用户 ID
-	PackageID      string `gorm:"column:package_id;type:char(64);uniqueIndex;not null"`      // 任务包 ID
-	Status         Status `gorm:"column:status;type:tinyint unsigned;index;not null"`        // 任务包的状态
+	TelegramUserID int64  `gorm:"column:telegram_user_id;type:bigint;not null;index;"`  // Telegram 用户 ID
+	PackageID      string `gorm:"column:package_id;type:char(64);uniqueIndex;not null"` // 任务包 ID
+	Status         Status `gorm:"column:status;type:tinyint unsigned;index;not null"`   // 任务包的状态
 
 	IsAudioOrSRT  bool   `gorm:"column:is_audio_or_srt;type:tinyint(1);index;not null;default:0"` // 是音频还是字幕
 	FileSha256    string `gorm:"column:file_sha256;type:char(64);index;not null"`                 // 文件的 SHA256

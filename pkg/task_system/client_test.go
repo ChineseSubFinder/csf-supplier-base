@@ -10,12 +10,24 @@ func TestTaskSystemClient_AddMachineTranslationTask(t *testing.T) {
 	subtitleAPIKEY := ""
 	client := NewTaskSystemClient(subtitleAPIKEY)
 
+	//getTranslatedResult, err := client.GetTranslatedResult("hkWySGaWCCfFcYDYRXkmbrfhrGeQaNwNVmFbmkurTMgEPvPuTIZhpwuORTXGDArc")
+	//if err != nil {
+	//	t.Errorf("GetTranslatedResult error: %v", err)
+	//	return
+	//}
+	//println("getTranslatedResult:", getTranslatedResult.Status, getTranslatedResult.Message)
+
 	imdbID := "tt2861424"
 	isMovie := false
 	Season := 1
 	Episode := 1
+
 	isAudioOrSRT := true
 	fileFullPath := "D:\\tmp\\test_audio\\tt2861424\\output-full.wav"
+
+	//isAudioOrSRT := false
+	//fileFullPath := "D:\\tmp\\test_srt\\tt2861424\\123.srt"
+
 	AudioSrcLanguage := "en"
 	TranslatedLanguage := "CN"
 	taskPackageResp, err := client.AddMachineTranslationTask(imdbID, isMovie, Season, Episode,

@@ -153,6 +153,31 @@ func (c *TaskSystemClient) GetTaskPackageStatus(taskPackageID string) (*api_hub.
 	return &reply, nil
 }
 
+func (c *TaskSystemClient) GetTranslatedResult(taskPackageID string) (*api_hub.GetTranslatedResultResp, error) {
+
+	getTaskPackageInfoReq := api_hub.GetTaskPackageInfoReq{
+		TaskPackageId: taskPackageID,
+		ApiKey:        c.apiKey,
+	}
+	// 发送请求
+	resp, err := c.client.R().
+		SetBody(getTaskPackageInfoReq).
+		SetAuthToken(c.comunicateToken).
+		Post(serverUrlBase + "/get-translated-result")
+
+	if err != nil {
+		return nil, err
+	}
+	var reply api_hub.GetTranslatedResultResp
+	// 从字符串转Struct
+	err = json.Unmarshal(resp.Body(), &reply)
+	if err != nil {
+		return nil, err
+	}
+
+	return &reply, nil
+}
+
 // CancelTaskPackage 取消任务包，提交和返回的数据都跟 GetTaskPackageStatus 一样
 func (c *TaskSystemClient) CancelTaskPackage(taskPackageID string) (*api_hub.GetTaskPackageInfoResp, error) {
 
