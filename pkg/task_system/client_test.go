@@ -22,11 +22,11 @@ func TestTaskSystemClient_AddMachineTranslationTask(t *testing.T) {
 	Season := 1
 	Episode := 1
 
-	//isAudioOrSRT := true
-	//fileFullPath := "D:\\tmp\\test_audio\\tt2861424\\output-full.wav"
+	isAudioOrSRT := true
+	fileFullPath := "D:\\tmp\\test_audio\\tt2861424\\output-full.wav"
 
-	isAudioOrSRT := false
-	fileFullPath := "D:\\tmp\\test_srt\\tt2861424\\123.srt"
+	//isAudioOrSRT := false
+	//fileFullPath := "D:\\tmp\\test_srt\\tt2861424\\123.srt"
 
 	AudioSrcLanguage := "en"
 	TranslatedLanguage := "CN"

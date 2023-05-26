@@ -131,3 +131,27 @@ type GetAllMergeTaskResp struct {
 	AllTranslatedDataDownloadUrl []string `json:"all_translated_data_download_url"` // 所有翻译后的数据的下载地址
 	OrgSrtDownloadUrl            string   `json:"org_srt_download_url"`             // 原始的字幕的下载地址
 }
+
+// ----------------------------------------------
+
+type WorkerPingPongReq struct {
+	TaskType     task_system.TaskType `json:"task_type"`      // 任务的类型
+	ApiKey       string               `json:"api_key"`        // 身份密钥
+	WorkerApiKey string               `json:"worker_api_key"` // worker 身份密钥
+}
+
+type WorkerPingPongResp struct {
+	Status  int    `json:"status"`  // 任务的状态 0 失败，1 成功
+	Message string `json:"message"` // 任务的状态信息
+}
+
+type WorkerCountReq struct {
+	ApiKey string `json:"api_key"` // 身份密钥
+}
+
+type WorkerCountResp struct {
+	Status       int      `json:"status"`        // 任务的状态 0 失败，1 成功
+	Message      string   `json:"message"`       // 任务的状态信息
+	WorkerTypes  []string `json:"worker_types"`  // worker 的类型
+	WorkerCounts []int    `json:"worker_counts"` // worker 的数量
+}
