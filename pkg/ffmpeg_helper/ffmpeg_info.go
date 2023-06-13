@@ -14,6 +14,7 @@ import (
 
 type FFMPEGInfo struct {
 	log              *logrus.Logger
+	cacheDirRootPath string                // 缓存的根目录
 	VideoFullPath    string                // 视频文件的路径
 	Duration         float64               // 视频的时长
 	AudioInfoList    []AudioInfo           // 内置音频列表
@@ -21,9 +22,10 @@ type FFMPEGInfo struct {
 	ExternalSubInfos []*subparser.FileInfo // 外置字幕列表
 }
 
-func NewFFMPEGInfo(log *logrus.Logger, videoFullPath string) *FFMPEGInfo {
+func NewFFMPEGInfo(log *logrus.Logger, videoFullPath, cacheDirRootPath string) *FFMPEGInfo {
 	return &FFMPEGInfo{
 		log:              log,
+		cacheDirRootPath: cacheDirRootPath,
 		VideoFullPath:    videoFullPath,
 		AudioInfoList:    make([]AudioInfo, 0),
 		SubtitleInfoList: make([]SubtitleInfo, 0),
@@ -35,7 +37,14 @@ func NewFFMPEGInfo(log *logrus.Logger, videoFullPath string) *FFMPEGInfo {
 // csf-cache/当前的视频文件名(不带后缀)
 func (f *FFMPEGInfo) GetCacheFolderFPath() (string, error) {
 	noExtVideoName := strings.ReplaceAll(filepath.Base(f.VideoFullPath), filepath.Ext(f.VideoFullPath), "")
-	return pkg.GetSubFixCacheFolderByName(noExtVideoName)
+	tmpFolderFullPath := filepath.Join(f.cacheDirRootPath, noExtVideoName)
+	if pkg.IsDir(tmpFolderFullPath) == false {
+		err := os.MkdirAll(tmpFolderFullPath, os.ModePerm)
+		if err != nil {
+			return "", err
+		}
+	}
+	return tmpFolderFullPath, nil
 }
 
 // IsExported 是否已经导出过，如果没有导出或者导出不完整为 false
