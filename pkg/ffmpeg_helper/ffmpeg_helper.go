@@ -23,14 +23,16 @@ import (
 )
 
 type FFMPEGHelper struct {
-	log          *logrus.Logger
-	SubParserHub *sub_parser_hub.SubParserHub // 字幕内容的解析器
+	log              *logrus.Logger
+	cacheDirRootPath string                       // 缓存的根目录
+	SubParserHub     *sub_parser_hub.SubParserHub // 字幕内容的解析器
 }
 
-func NewFFMPEGHelper(log *logrus.Logger) *FFMPEGHelper {
+func NewFFMPEGHelper(log *logrus.Logger, cacheDirRootPath string) *FFMPEGHelper {
 	return &FFMPEGHelper{
-		log:          log,
-		SubParserHub: sub_parser_hub.NewSubParserHub(log, ass.NewParser(log), srt.NewParser(log)),
+		log:              log,
+		cacheDirRootPath: cacheDirRootPath,
+		SubParserHub:     sub_parser_hub.NewSubParserHub(log, ass.NewParser(log), srt.NewParser(log)),
 	}
 }
 
@@ -414,8 +416,8 @@ func (f *FFMPEGHelper) parseJsonString2GetFFProbeInfo(videoFileFullPath, inputFF
 		return false, nil, nil
 	}
 
-	ffmpegInfoFlitter := NewFFMPEGInfo(f.log, videoFileFullPath)
-	ffmpegInfoFull := NewFFMPEGInfo(f.log, videoFileFullPath)
+	ffmpegInfoFlitter := NewFFMPEGInfo(f.log, videoFileFullPath, f.cacheDirRootPath)
+	ffmpegInfoFull := NewFFMPEGInfo(f.log, videoFileFullPath, f.cacheDirRootPath)
 
 	// 进行字幕和音频的缓存，优先当然是导出 中、英、日、韩 相关的字幕和音频
 	// 但是如果都没得这些的时候，那么也需要导出至少一个字幕或者音频，用于字幕的校正
