@@ -35,6 +35,10 @@ func (a AudioInfo) GetLanguage() langType.MyLanguage {
 	return language.ISOString2SupportLang(a.language)
 }
 
+func (a AudioInfo) GetOrgLanguage() string {
+	return a.language
+}
+
 // GetName 获取音频名称，这里以音频的名称（中文）+ 索引的位置类描述
 func (a AudioInfo) GetName() string {
 	return fmt.Sprintf("%s_%d", language.Lang2ChineseString(a.GetLanguage()), a.Index)
