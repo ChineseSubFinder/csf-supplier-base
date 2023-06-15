@@ -48,7 +48,7 @@ func (f *FFMPEGInfo) GetCacheFolderFPath() (string, error) {
 }
 
 // IsExported 是否已经导出过，如果没有导出或者导出不完整为 false
-func (f *FFMPEGInfo) IsExported(exportType ExportType) bool {
+func (f *FFMPEGInfo) IsExported(exportType ExportType, exportAudioType ExportAudioType) bool {
 
 	bProcessDone := false
 	nowCacheFolder, err := f.GetCacheFolderFPath()
@@ -80,7 +80,7 @@ func (f *FFMPEGInfo) IsExported(exportType ExportType) bool {
 	switch exportType {
 	case Audio:
 		// 音频是否导出了
-		done := f.isAudioExported(nowCacheFolder)
+		done := f.isAudioExported(nowCacheFolder, exportAudioType)
 		if done == false {
 			return bProcessDone
 		}
@@ -93,7 +93,7 @@ func (f *FFMPEGInfo) IsExported(exportType ExportType) bool {
 		}
 	case SubtitleAndAudio:
 		// 音频是否导出了
-		done := f.isAudioExported(nowCacheFolder)
+		done := f.isAudioExported(nowCacheFolder, exportAudioType)
 		if done == false {
 			return bProcessDone
 		}

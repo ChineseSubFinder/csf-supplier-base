@@ -100,7 +100,7 @@ func (f *FFMPEGHelper) ExportFFMPEGInfo(videoFileFullPath string, exportType Exp
 	ffMPEGInfo.Duration = f.GetVideoDuration(videoFileFullPath)
 
 	// 判断这个视频是否已经导出过内置的字幕和音频文件了
-	if ffMPEGInfo.IsExported(exportType) == false {
+	if ffMPEGInfo.IsExported(exportType, exportAudioType) == false {
 		// 说明缓存不存在，需要导出，这里需要注意，如果导出失败了，这个文件夹要清理掉
 		if pkg.IsDir(nowCacheFolderPath) == true {
 			// 如果存在则，先清空一个这个文件夹
