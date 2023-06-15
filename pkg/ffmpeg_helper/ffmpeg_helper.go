@@ -149,7 +149,7 @@ func (f *FFMPEGHelper) ExportFFMPEGInfo(videoFileFullPath string, exportType Exp
 		}
 		// 导出后，需要把现在导出的文件的路径给复制给 ffMPEGInfo 中
 		// 音频是否导出了
-		ffMPEGInfo.isAudioExported(nowCacheFolderPath)
+		ffMPEGInfo.isAudioExported(nowCacheFolderPath, exportAudioType)
 		// 字幕都要导出了
 		ffMPEGInfo.isSubExported(nowCacheFolderPath)
 		// 创建 exportedMakeFileName 这个文件
