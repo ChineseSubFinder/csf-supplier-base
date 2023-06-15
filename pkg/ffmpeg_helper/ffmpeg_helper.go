@@ -12,7 +12,6 @@ import (
 	"github.com/ChineseSubFinder/csf-supplier-base/pkg/sub_parser_hub/sub_parser/srt"
 	"os"
 	"os/exec"
-	"path"
 	"path/filepath"
 	"strconv"
 
@@ -113,7 +112,7 @@ func (f *FFMPEGHelper) ExportFFMPEGInfo(videoFileFullPath string, exportType Exp
 		}
 		// 开始导出
 		// 构建导出的命令参数
-		exportAudioArgs, exportSubArgs := f.getAudioAndSubExportArgs(videoFileFullPath, ffMPEGInfo)
+		exportAudioArgs, exportSubArgs := f.getAudioAndSubExportArgs(videoFileFullPath, ffMPEGInfo, exportAudioType)
 
 		// 上面导出的信息，可能是 nil 参数，那么就直接把导出的 List 信息给置为 nil，让后续有依据可以跳出，不继续执行
 		if exportType == Subtitle {
@@ -161,51 +160,7 @@ func (f *FFMPEGHelper) ExportFFMPEGInfo(videoFileFullPath string, exportType Exp
 		}
 	}
 
-	if exportAudioType == Wav {
-		// 说明缓存存在，那么判断是否需要从 PCM 转 WAV
-		for _, audioInfo := range ffMPEGInfo.AudioInfoList {
-			err = f.changePCM2Wav(audioInfo.FullPath)
-			if err != nil {
-				return false, nil, err
-			}
-		}
-	}
-
 	return bok, ffMPEGInfo, nil
-}
-
-// changePCM2Wav 将 pcm 转换为 wav
-func (f *FFMPEGHelper) changePCM2Wav(pcmFPath string) error {
-
-	if pkg.IsFile(pcmFPath) == false {
-		return nil
-	}
-
-	if path.Ext(pcmFPath) != PCM.ExtName() {
-		return nil
-	}
-	// 构建转换的参数
-	var audioArgs = make([]string, 0)
-	audioArgs = append(audioArgs, "-ar")
-	audioArgs = append(audioArgs, "16000")
-	audioArgs = append(audioArgs, "-ac")
-	audioArgs = append(audioArgs, "1")
-	audioArgs = append(audioArgs, "-f")
-	audioArgs = append(audioArgs, "s16le")
-
-	audioArgs = append(audioArgs, "-i")
-	audioArgs = append(audioArgs, pcmFPath)
-	// 导出的文件路径
-	outFPath := strings.ReplaceAll(pcmFPath, PCM.ExtName(), Wav.ExtName())
-	audioArgs = append(audioArgs, outFPath)
-
-	execErrorString, err := f.execFFMPEG(audioArgs)
-	if err != nil {
-		f.log.Errorln("changePCM2Wav", execErrorString)
-		return err
-	}
-
-	return nil
 }
 
 // ExportAudioDurationInfo 获取音频的长度信息
@@ -618,7 +573,7 @@ func (f *FFMPEGHelper) execFFMPEG(cmds []string) (string, error) {
 }
 
 // getAudioAndSubExportArgs 构建从原始视频导出字幕、音频的 ffmpeg 的参数 audioArgs, subArgs
-func (f *FFMPEGHelper) getAudioAndSubExportArgs(videoFileFullPath string, ffmpegInfo *FFMPEGInfo) ([]string, []string) {
+func (f *FFMPEGHelper) getAudioAndSubExportArgs(videoFileFullPath string, ffmpegInfo *FFMPEGInfo, exportAudioType ExportAudioType) ([]string, []string) {
 
 	/*
 		导出多个字幕
@@ -671,7 +626,8 @@ func (f *FFMPEGHelper) getAudioAndSubExportArgs(videoFileFullPath string, ffmpeg
 	} else {
 		for _, audioInfo := range ffmpegInfo.AudioInfoList {
 			f.addAudioMapArg(&audioArgs, audioInfo.Index,
-				filepath.Join(nowCacheFolderPath, audioInfo.GetName()+PCM.ExtName()))
+				filepath.Join(nowCacheFolderPath, audioInfo.GetName()+exportAudioType.ExtName()),
+				exportAudioType)
 		}
 	}
 
@@ -898,14 +854,38 @@ func (f *FFMPEGHelper) addSubMapArg(subArgs *[]string, index int, subSaveFullPat
 }
 
 // addAudioMapArg 构建音频的导出参数
-func (f *FFMPEGHelper) addAudioMapArg(subArgs *[]string, index int, audioSaveFullPath string) {
-	// -acodec pcm_s16le -f s16le -ac 1 -ar 16000
+//func (f *FFMPEGHelper) addAudioMapArg(subArgs *[]string, index int, audioSaveFullPath string) {
+//	// -acodec pcm_s16le -f s16le -ac 1 -ar 16000
+//	*subArgs = append(*subArgs, "-map")
+//	*subArgs = append(*subArgs, fmt.Sprintf("0:%d", index))
+//	*subArgs = append(*subArgs, "-acodec")
+//	*subArgs = append(*subArgs, "pcm_s16le")
+//	*subArgs = append(*subArgs, "-f")
+//	*subArgs = append(*subArgs, "s16le")
+//	*subArgs = append(*subArgs, "-ac")
+//	*subArgs = append(*subArgs, "1")
+//	*subArgs = append(*subArgs, "-ar")
+//	*subArgs = append(*subArgs, "16000")
+//	*subArgs = append(*subArgs, audioSaveFullPath)
+//}
+
+// addAudioMapArg 构建音频的导出参数
+func (f *FFMPEGHelper) addAudioMapArg(subArgs *[]string, index int, audioSaveFullPath string, exportAudioType ExportAudioType) {
 	*subArgs = append(*subArgs, "-map")
 	*subArgs = append(*subArgs, fmt.Sprintf("0:%d", index))
 	*subArgs = append(*subArgs, "-acodec")
-	*subArgs = append(*subArgs, "pcm_s16le")
+
+	switch exportAudioType {
+	case MP3:
+		*subArgs = append(*subArgs, "libmp3lame")
+	case Wav:
+		*subArgs = append(*subArgs, "pcm_s16le")
+	default:
+		*subArgs = append(*subArgs, "pcm_s16le") // 默认为 PCM
+	}
+
 	*subArgs = append(*subArgs, "-f")
-	*subArgs = append(*subArgs, "s16le")
+	*subArgs = append(*subArgs, exportAudioType.TypeName()) // 文件格式用编解码器标志
 	*subArgs = append(*subArgs, "-ac")
 	*subArgs = append(*subArgs, "1")
 	*subArgs = append(*subArgs, "-ar")

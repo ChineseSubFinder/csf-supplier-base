@@ -2,3 +2,4 @@
 *.log
 /cache
 /csf-supplier-config.yaml
+/pkg/whisper_helper/*.json
