@@ -45,6 +45,8 @@ func importTSVData(wg *sync.WaitGroup, tsvFPath string) {
 		wg.Done()
 	}()
 
+	logger.Infoln("import:", tsvFPath)
+
 	f, err := os.Open(tsvFPath)
 	if err != nil {
 		logger.Panicln(err)
@@ -56,6 +58,9 @@ func importTSVData(wg *sync.WaitGroup, tsvFPath string) {
 	if err != nil {
 		logger.Panicln(err)
 	}
+
+	logger.Infoln("allLineCount:", allLineCount)
+
 	_, err = f.Seek(0, 0)
 	if err != nil {
 		logger.Panicf("Encountered error while seek 0 : %v", err)
