@@ -1,6 +1,6 @@
 package api_hub
 
-import "github.com/ChineseSubFinder/csf-supplier-base/db/task_system"
+import "github.com/VideoTranslationTools/base/db/task_system"
 
 // GetOneTaskReq 获取一个任务的请求
 type GetOneTaskReq struct {
