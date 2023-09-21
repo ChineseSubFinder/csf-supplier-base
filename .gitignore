@@ -3,3 +3,4 @@
 /cache
 /csf-supplier-config.yaml
 /pkg/whisper_helper/*.json
+/pkg/cloudflare_helper/csf-supplier-config.yaml

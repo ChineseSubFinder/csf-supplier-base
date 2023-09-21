@@ -4,7 +4,6 @@ import (
 	"github.com/ChineseSubFinder/csf-supplier-base/db/dao"
 	"github.com/ChineseSubFinder/csf-supplier-base/db/models"
 	"github.com/ChineseSubFinder/csf-supplier-base/pkg/settings"
-	"os"
 	"testing"
 )
 
@@ -14,16 +13,15 @@ func TestCloudFlareHelper_uploadFile(t *testing.T) {
 
 	// 获取文件的大小
 	uploadFile := "C:\\temp\\英_2.ass"
-	fi, err := os.Stat(uploadFile)
-	if err != nil {
-		t.Fatal(err)
-	}
+	//fi, err := os.Stat(uploadFile)
+	//if err != nil {
+	//	t.Fatal(err)
+	//}
 
-	url, err := c.GenerateUploadUrl("upload/234.ass", fi.Size())
+	err := c.UploadFile2(uploadFile, "upload/234.ass")
 	if err != nil {
 		t.Fatal(err)
 	}
-	println(url)
 
 	//err := c.DeleteAllFile()
 	//if err != nil {
@@ -70,4 +68,15 @@ func TestCloudFlareHelper_uploadFile(t *testing.T) {
 		println("UploadFile success")
 	}
 
+}
+
+func TestCloudFlareHelper_MoveFile(t *testing.T) {
+
+	c := NewCloudFlareHelper(settings.Get().CloudFlareConfig)
+	sourceFilePath := "upload/234.ass"
+	desFilePath := "moved/123.ass"
+	err := c.MoveFile(sourceFilePath, desFilePath)
+	if err != nil {
+		t.Fatal(err)
+	}
 }

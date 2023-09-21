@@ -12,6 +12,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/credentials"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
 	"github.com/aws/aws-sdk-go-v2/service/s3/types"
+	"io/ioutil"
 	"time"
 )
 
@@ -62,6 +63,24 @@ func (c CloudFlareHelper) UploadFile(houseKeepingConfig settings.HouseKeepingCon
 		Bucket: aws.String(c.cloudFlareConfig.BucketName),
 		Key:    aws.String(r2StoreKey),
 		Body:   bytes.NewReader(body),
+	})
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (c CloudFlareHelper) UploadFile2(filePath, r2StoreKey string) error {
+
+	readFile, err := ioutil.ReadFile(filePath)
+	if err != nil {
+		return err
+	}
+
+	_, err = c.s3Client.PutObject(context.TODO(), &s3.PutObjectInput{
+		Bucket: aws.String(c.cloudFlareConfig.BucketName),
+		Key:    aws.String(r2StoreKey),
+		Body:   bytes.NewReader(readFile),
 	})
 	if err != nil {
 		return err
@@ -164,6 +183,28 @@ func (c CloudFlareHelper) DeleteAllFile() error {
 		} else {
 			break
 		}
+	}
+
+	return nil
+}
+
+func (c CloudFlareHelper) MoveFile(sourceFilePath, desFilePath string) error {
+
+	_, err := c.s3Client.CopyObject(context.TODO(), &s3.CopyObjectInput{
+		Bucket:     aws.String(c.cloudFlareConfig.BucketName),
+		CopySource: aws.String(fmt.Sprintf("%s/%s", c.cloudFlareConfig.BucketName, sourceFilePath)),
+		Key:        aws.String(desFilePath),
+	})
+	if err != nil {
+		return err
+	}
+
+	_, err = c.s3Client.DeleteObject(context.TODO(), &s3.DeleteObjectInput{
+		Bucket: aws.String(c.cloudFlareConfig.BucketName),
+		Key:    aws.String(sourceFilePath),
+	})
+	if err != nil {
+		return err
 	}
 
 	return nil

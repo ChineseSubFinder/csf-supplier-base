@@ -3,6 +3,7 @@ module github.com/ChineseSubFinder/csf-supplier-base
 go 1.18
 
 require (
+	github.com/VideoTranslationTools/base v0.1.2
 	github.com/WQGroup/logger v0.0.6
 	github.com/abadojack/whatlanggo v1.0.1
 	github.com/allanpk716/rod_helper v0.0.78
@@ -26,18 +27,17 @@ require (
 	github.com/saintfish/chardet v0.0.0-20230101081208-5e3ef4b5456d
 	github.com/sirupsen/logrus v1.9.0
 	github.com/spf13/viper v1.14.0
-	github.com/tidwall/gjson v1.9.4
+	github.com/tidwall/gjson v1.14.4
 	github.com/valyala/tsvreader v1.0.0
-	golang.org/x/net v0.10.0
-	golang.org/x/text v0.9.0
+	golang.org/x/net v0.15.0
+	golang.org/x/text v0.13.0
 	gorm.io/driver/mysql v1.5.1
 	gorm.io/driver/sqlite v1.4.4
 	gorm.io/gorm v1.25.1
 )
 
 require (
-	github.com/VideoTranslationTools/base v0.1.2 // indirect
-	github.com/andybalholm/brotli v1.0.4 // indirect
+	github.com/andybalholm/brotli v1.0.5 // indirect
 	github.com/aws/aws-sdk-go-v2/aws/protocol/eventstream v1.4.10 // indirect
 	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.12.21 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/configsources v1.1.27 // indirect
@@ -95,7 +95,7 @@ require (
 	github.com/ysmood/gson v0.7.2 // indirect
 	github.com/ysmood/leakless v0.8.0 // indirect
 	go4.org v0.0.0-20201209231011-d4a079459e60 // indirect
-	golang.org/x/sys v0.8.0 // indirect
+	golang.org/x/sys v0.12.0 // indirect
 	google.golang.org/protobuf v1.30.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
