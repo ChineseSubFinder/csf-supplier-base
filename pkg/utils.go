@@ -144,6 +144,13 @@ func CopyFile(src, dst string) error {
 	var dstFd *os.File
 	var srcInfo os.FileInfo
 
+	dstDir := filepath.Dir(dst)
+	if IsDir(dstDir) == false {
+		err = os.MkdirAll(dstDir, os.ModePerm)
+		if err != nil {
+			return err
+		}
+	}
 	if srcFd, err = os.Open(src); err != nil {
 		return err
 	}

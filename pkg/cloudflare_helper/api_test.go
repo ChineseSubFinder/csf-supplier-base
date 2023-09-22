@@ -73,8 +73,8 @@ func TestCloudFlareHelper_uploadFile(t *testing.T) {
 func TestCloudFlareHelper_MoveFile(t *testing.T) {
 
 	c := NewCloudFlareHelper(settings.Get().CloudFlareConfig)
-	sourceFilePath := "upload/234.ass"
-	desFilePath := "moved/123.ass"
+	sourceFilePath := `upload/234.ass`
+	desFilePath := `moved/123.ass`
 	err := c.MoveFile(sourceFilePath, desFilePath)
 	if err != nil {
 		t.Fatal(err)
