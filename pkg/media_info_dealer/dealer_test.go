@@ -9,7 +9,7 @@ import (
 )
 
 func init() {
-	rod_helper.InitFakeUA(settings.Get().CacheRootDirPath, settings.Get().TMDBConfig.TMDBHttpProxy)
+	rod_helper.InitFakeUA(true, settings.Get().CacheRootDirPath, settings.Get().TMDBConfig.TMDBHttpProxy)
 }
 
 func TestDealers_IMDBEpsId2TVId(t *testing.T) {
@@ -36,7 +36,12 @@ func TestDealers_IMDBEpsId2TVId(t *testing.T) {
 	// 连续剧：无为大师
 	//mainID := "tt4635276"
 	// 连续剧：危险关系
-	mainID := "tt14792896"
+	//mainID := "tt14792896"
+	// 连续剧：大楼里只有谋杀 正确的 IMDB ID 是
+	// http://www.imdb.com/title/tt12851524/
+	// http://www.imdb.com/title/tt15425160/
+	// http://www.imdb.com/title/tt21261218/
+	mainID := "tt12851524"
 	mainTVId, season, eps, err := dealer.IMDBEpsId2TVId(mainID)
 	if err != nil {
 		t.Fatal(err)

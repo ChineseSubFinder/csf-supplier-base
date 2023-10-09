@@ -2,6 +2,7 @@ package settings
 
 import (
 	"github.com/WQGroup/logger"
+	"github.com/allanpk716/rod_helper"
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
 	"sync"
@@ -66,7 +67,7 @@ type Config struct {
 	DBConnectConfig      DBConnectConfig
 	SuccessWordsConfig   SuccessWordsConfig
 	FailWordsConfig      FailWordsConfig
-	TimeConfig           TimeConfig
+	TimeConfig           rod_helper.TimeConfig
 	TMDBConfig           TMDBConfig
 	SubsHuo720Config     SubsHuo720Config
 	CaptchaConfig        CaptchaConfig

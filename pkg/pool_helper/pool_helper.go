@@ -80,6 +80,7 @@ func (p *Pools) GetOnePool() *rod_helper.Pool {
 
 func GetPoolOption(poolIndex int) *rod_helper.PoolOptions {
 	var timeConfig rod_helper.TimeConfig
+	timeConfig.OnePageTimeOut = settings.Get().TimeConfig.OnePageTimeOut
 	timeConfig.OneProxyNodeUseInternalMinTime = settings.Get().TimeConfig.OneProxyNodeUseInternalMinTime
 	timeConfig.OneProxyNodeUseInternalMaxTime = settings.Get().TimeConfig.OneProxyNodeUseInternalMaxTime
 	timeConfig.ProxyNodeSkipAccessTime = settings.Get().TimeConfig.ProxyNodeSkipAccessTime
