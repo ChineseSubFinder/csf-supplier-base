@@ -6,7 +6,7 @@ require (
 	github.com/VideoTranslationTools/base v0.1.2
 	github.com/WQGroup/logger v0.0.6
 	github.com/abadojack/whatlanggo v1.0.1
-	github.com/allanpk716/rod_helper v0.0.83
+	github.com/allanpk716/rod_helper v0.0.84
 	github.com/aws/aws-sdk-go-v2 v1.17.3
 	github.com/aws/aws-sdk-go-v2/config v1.18.8
 	github.com/aws/aws-sdk-go-v2/credentials v1.13.8
