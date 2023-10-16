@@ -49,8 +49,8 @@ github.com/alecthomas/template v0.0.0-20160405071501-a0175ee3bccc/go.mod h1:LOuy
 github.com/alecthomas/units v0.0.0-20151022065526-2efee857e7cf/go.mod h1:ybxpYRFXyAe+OPACYpWeL0wqObRcbAqCMya13uyzqw0=
 github.com/allanpk716/go-parse-torrent-name v0.0.2 h1:0o9Mp5c1pO2LK+NVsth0MlDUi5FYRfRU2Jw49YfLRbU=
 github.com/allanpk716/go-parse-torrent-name v0.0.2/go.mod h1:H66QhXPJpUSdWschhL6u//v3ge96/qMnQ9mWp3efbxA=
-github.com/allanpk716/rod_helper v0.0.84 h1:g3DYFEyaO16aRXs1FrJ9ysGsMzGP/Ydc7PZDWNhvnFU=
-github.com/allanpk716/rod_helper v0.0.84/go.mod h1:tKIBEJ1raSN4nXaGTk9/9vVJjlFI/TFHgD4JEGmbkCc=
+github.com/allanpk716/rod_helper v0.0.85 h1:NsJDnd4vNv8emrjgIQ6zBiVwFL5Hr3g71QrBQ87HSQ4=
+github.com/allanpk716/rod_helper v0.0.85/go.mod h1:tKIBEJ1raSN4nXaGTk9/9vVJjlFI/TFHgD4JEGmbkCc=
 github.com/allanpk716/sat v1.0.4 h1:Oz3Ba2T4Y8QM+fQdoP7ZHTF34psu2HY46sO/EbauM/U=
 github.com/allanpk716/sat v1.0.4/go.mod h1:PScEbYw8UMiu0y9VNvPdBkF9NU+xXnyK9FbrUUTFM2s=
 github.com/andybalholm/brotli v1.0.1/go.mod h1:loMXtMfwqflxFJPmdbJO0a3KNoPuLBgiu3qAvBg8x/Y=
