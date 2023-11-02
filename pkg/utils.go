@@ -414,3 +414,56 @@ func GetFileSha256AndSize(fileFPath string) (string, string, int, error) {
 
 	return fileName, fileSha256, fileSize, nil
 }
+
+func DetectFileTypeString(fileFPath string) (string, error) {
+	/*
+		text/plain; charset=utf-8			文本，.srt  .ass
+		application/zip						.zip
+		application/x-rar-compressed		.rar
+		application/x-gzip					.gz
+		application/octet-stream			未知类型，比如：.7z  .sup 都会认为是这个类型
+	*/
+	file, err := os.Open(fileFPath)
+	if err != nil {
+		return "", err
+	}
+	defer file.Close()
+	buf := make([]byte, BYTES_TO_READ)
+	if _, err := io.ReadFull(file, buf); err != nil {
+		return "", err
+	}
+	mimeType := http.DetectContentType(buf)
+	return mimeType, nil
+}
+
+func FileTypeStringIs(fileTypeStr string) FileType {
+	if strings.Contains(fileTypeStr, d_text) == true {
+		return Text
+	} else if strings.Contains(fileTypeStr, d_zip) == true {
+		return Zip
+	} else if strings.Contains(fileTypeStr, d_rar) == true {
+		return Rar
+	} else if strings.Contains(fileTypeStr, d_gzip) == true {
+		return Gz
+	} else {
+		return UnKnow
+	}
+}
+
+const (
+	BYTES_TO_READ = 512
+	d_text        = "text"
+	d_zip         = "zip"
+	d_rar         = "rar"
+	d_gzip        = "gzip"
+)
+
+type FileType int
+
+const (
+	Text FileType = iota + 1
+	Zip
+	Rar
+	Gz
+	UnKnow
+)

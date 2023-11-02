@@ -201,18 +201,115 @@ func (h HouseKeeping) Process(site models.WhichSite, sourceId SourceId, download
 	}
 }
 
+func (h HouseKeeping) FixMissingExtBug() {
+
+	subHub := sub_parser_hub.NewSubParserHub(logger.GetLogger(), ass.NewParser(logger.GetLogger()), srt.NewParser(logger.GetLogger()))
+	var houseKeepingErrors []models.HouseKeepingError
+	// downloaded_id = 91387 AND
+	dao.Get().Order("downloaded_id desc").Where("downloaded_id = 91289 AND which_site = ? AND subtitle_ext_type = ? AND downloaded_id >= 90709", models.ZiMuKu.Index(), 4).Limit(1).Find(&houseKeepingErrors)
+	for _, houseKeepingError := range houseKeepingErrors {
+
+		logger.Infoln("------------------------------")
+		logger.Infoln("FixMissingExtBug", houseKeepingError.DownloadedSubId, houseKeepingError.SaveRelativePath)
+		var downloadInfoZiMuKus []models.DownloadedInfoZiMuKu
+		dao.Get().Where("id = ?", houseKeepingError.DownloadedSubId).Limit(1).Find(&downloadInfoZiMuKus)
+		if len(downloadInfoZiMuKus) < 1 {
+			logger.Errorln("downloadInfoZiMuKus len < 1")
+			continue
+		}
+		oneDownloadInfoZiMuKus := downloadInfoZiMuKus[0]
+		subFileFPath := oneDownloadInfoZiMuKus.DownloadedInfo.SubFileFPath(settings.Get().ZiMuKuConfig.SubsSaveRootDirPath)
+		if pkg.IsFile(subFileFPath) == false {
+			logger.Errorln(subFileFPath, "sub file is missing")
+			continue
+		}
+		// 首先进行这个文件的后缀名的读取，是否是已知的格式，ass srt zip 等，如果不是再继续进行处理
+		// 推断这个是什么文件
+		fileTypeStr, err := pkg.DetectFileTypeString(subFileFPath)
+		if err != nil {
+			logger.Errorln("DetectFileTypeString", subFileFPath, err)
+			continue
+		}
+		fileType := pkg.FileTypeStringIs(fileTypeStr)
+		newFileFPath := ""
+		dectExt := ""
+		if fileType == pkg.UnKnow {
+			// 不知道什么类型的，那么就默认该后缀名为 .7z
+			logger.Infoln("UnKnow", subFileFPath)
+			// 那么需要判断是否是 7z 的后缀名，如果不是则需要添加
+			if strings.ToLower(filepath.Ext(subFileFPath)) != archive_helper.SevenZ.String() {
+				newFileFPath = subFileFPath + archive_helper.SevenZ.String()
+				dectExt = archive_helper.SevenZ.String()
+			}
+		} else if fileType == pkg.Text {
+			// 需要进行字幕类型的检测
+			bok, subFileInfo, err := subHub.DetermineFileTypeFromFile(subFileFPath, models.ZiMuKu)
+			if bok == false {
+				logger.Errorln("DetermineFileTypeFromFile == false", subFileFPath, err)
+				continue
+			}
+			// 是否后缀名已经有了
+			if strings.ToLower(filepath.Ext(subFileFPath)) != subFileInfo.Ext {
+				newFileFPath = subFileFPath + subFileInfo.Ext
+			}
+			dectExt = subFileInfo.Ext
+		} else if fileType == pkg.Zip {
+			// 是一种压缩包格式
+			// 判断 subFileFPath 的后缀名是否是 .zip
+			if strings.ToLower(filepath.Ext(subFileFPath)) != archive_helper.Zip.String() {
+				newFileFPath = subFileFPath + archive_helper.Zip.String()
+				dectExt = archive_helper.Zip.String()
+			}
+
+		} else if fileType == pkg.Rar {
+			// 是一种压缩包格式
+			if strings.ToLower(filepath.Ext(subFileFPath)) != archive_helper.Rar.String() {
+				newFileFPath = subFileFPath + archive_helper.Rar.String()
+				dectExt = archive_helper.Rar.String()
+			}
+		} else if fileType == pkg.Gz {
+			// 是一种压缩包格式
+			if strings.ToLower(filepath.Ext(subFileFPath)) != archive_helper.GZ.String() {
+				newFileFPath = subFileFPath + archive_helper.GZ.String()
+				dectExt = archive_helper.GZ.String()
+			}
+		} else {
+			logger.Panicln("Not Supported", subFileFPath, fileType)
+		}
+		if newFileFPath != "" {
+			// 修改 houseKeepingError 和 DownloadedInfoZiMuKu 对应的 save_relative_path 信息
+			tmp := houseKeepingError.SaveRelativePath + dectExt
+			houseKeepingError.SaveRelativePath = tmp
+			oneDownloadInfoZiMuKus.SaveRelativePath = tmp
+			// 更新到数据库中
+			err = dao.Get().Save(&houseKeepingError).Error
+			if err != nil {
+				logger.Errorln("Save houseKeepingError Error", err)
+				continue
+			}
+			err = dao.Get().Save(&oneDownloadInfoZiMuKus).Error
+			if err != nil {
+				logger.Errorln("Save oneDownloadInfoZiMuKus Error", err)
+				continue
+			}
+			// 进行改名修复
+			err = os.Rename(subFileFPath, newFileFPath)
+			if err != nil {
+				logger.Errorln("Rename", subFileFPath, err)
+				continue
+			}
+		} else {
+			logger.Infoln("No need to fix it")
+		}
+	}
+}
+
 // organizeSubs 将下载的字幕进行一次组织，获取字幕的信息，然后存储
 func (h HouseKeeping) organizeSubs(site models.WhichSite, subsSaveRootDirPath string, downloadDBId uint, downloadedInfo models.DownloadedInfo, dSubInfo models.DSubInfo) error {
 
 	logger.Infoln("organizeSubs Start:", downloadedInfo.Title)
 	var err error
 	tmpDir := rod_helper.GetTmpFolderByName(settings.Get().HouseKeepingConfig.TmpRootDirPath, dSubInfo.ImdbId)
-	defer func() {
-		err = os.RemoveAll(tmpDir)
-		if err != nil {
-			logger.Errorln("RemoveAll", tmpDir, "Error", err)
-		}
-	}()
 	// 注意这里的字幕网站的缓存路径也不一样
 	nowFileFPath := downloadedInfo.SubFileFPath(subsSaveRootDirPath)
 	nowExt := filepath.Ext(nowFileFPath)

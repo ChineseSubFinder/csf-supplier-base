@@ -1,11 +1,11 @@
 package ass
 
 import (
+	"github.com/ChineseSubFinder/csf-supplier-base/pkg/common"
 	"github.com/ChineseSubFinder/csf-supplier-base/pkg/language"
 	"github.com/ChineseSubFinder/csf-supplier-base/pkg/regex_things"
 	subparser "github.com/ChineseSubFinder/csf-supplier-base/pkg/sub_parser_hub/sub_parser"
 	"os"
-	"path/filepath"
 	"strings"
 
 	"github.com/emirpasic/gods/maps/treemap"
@@ -30,7 +30,6 @@ func (p Parser) GetParserName() string {
 	需要额外的处理逻辑，比如不用报错，而是跳过后续的逻辑
 */
 func (p Parser) DetermineFileTypeFromFile(filePath string) (bool, *subparser.FileInfo, error) {
-	nowExt := filepath.Ext(filePath)
 
 	if p.log != nil {
 		p.log.Debugln("DetermineFileTypeFromFile", p.GetParserName(), filePath)
@@ -44,11 +43,11 @@ func (p Parser) DetermineFileTypeFromFile(filePath string) (bool, *subparser.Fil
 	if err != nil {
 		return false, nil, err
 	}
-	return p.DetermineFileTypeFromBytes(inBytes, nowExt)
+	return p.DetermineFileTypeFromBytes(inBytes)
 }
 
 // DetermineFileTypeFromBytes 确定字幕文件的类型，是双语字幕或者某一种语言等等信息
-func (p Parser) DetermineFileTypeFromBytes(inBytes []byte, nowExt string) (bool, *subparser.FileInfo, error) {
+func (p Parser) DetermineFileTypeFromBytes(inBytes []byte) (bool, *subparser.FileInfo, error) {
 	allString := string(inBytes)
 
 	subFileInfo := subparser.FileInfo{}
@@ -68,7 +67,7 @@ func (p Parser) DetermineFileTypeFromBytes(inBytes []byte, nowExt string) (bool,
 		return false, nil, nil
 	}
 	subFileInfo.Content = string(inBytes)
-	subFileInfo.Ext = nowExt
+	subFileInfo.Ext = common.SubExtASS
 	subFileInfo.Dialogues = make([]subparser.OneDialogue, 0)
 	subFileInfo.DialoguesFilter = make([]subparser.OneDialogue, 0)
 	// 这里需要统计一共有几个 \N，以及这个数量在整体行数中的比例，这样就知道是不是双语字幕了

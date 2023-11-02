@@ -389,6 +389,7 @@ const (
 	Tar
 	Rar
 	SevenZ
+	GZ
 )
 
 func (t ExtType) String() string {
@@ -401,6 +402,8 @@ func (t ExtType) String() string {
 		return ".rar"
 	case SevenZ:
 		return ".7z"
+	case GZ:
+		return ".gz"
 	default:
 		logger.Panicln("not support ext type")
 		return ""

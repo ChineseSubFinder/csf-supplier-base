@@ -7,5 +7,5 @@ type ISubParser interface {
 
 	DetermineFileTypeFromFile(filePath string) (bool, *subparser.FileInfo, error)
 
-	DetermineFileTypeFromBytes(inBytes []byte, nowExt string) (bool, *subparser.FileInfo, error)
+	DetermineFileTypeFromBytes(inBytes []byte) (bool, *subparser.FileInfo, error)
 }

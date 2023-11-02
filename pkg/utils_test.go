@@ -155,3 +155,12 @@ func TestUploadFile2R2(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+func TestDetectFileType(t *testing.T) {
+	ff := "C:\\Users\\allan716\\Desktop\\123\\123.sup"
+	ft, err := DetectFileTypeString(ff)
+	if err != nil {
+		t.Fatal(err)
+	}
+	println(ft)
+}
