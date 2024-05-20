@@ -118,22 +118,32 @@ func (f *FFMPEGHelper) ExportFFMPEGInfo(videoFileFullPath string, exportType Exp
 		if exportType == Subtitle {
 			if exportSubArgs == nil {
 				ffMPEGInfo.SubtitleInfoList = nil
-				return true, ffMPEGInfo, nil
+				return false, ffMPEGInfo, nil
 			}
 		} else if exportType == Audio {
 			if exportAudioArgs == nil {
 				ffMPEGInfo.AudioInfoList = nil
-				return true, ffMPEGInfo, nil
+				return false, ffMPEGInfo, nil
 			}
 		} else if exportType == SubtitleAndAudio {
-			if exportAudioArgs == nil || exportSubArgs == nil {
+			if exportAudioArgs == nil && exportSubArgs == nil {
 				if exportAudioArgs == nil {
 					ffMPEGInfo.AudioInfoList = nil
 				}
 				if exportSubArgs == nil {
 					ffMPEGInfo.SubtitleInfoList = nil
 				}
-				return true, ffMPEGInfo, nil
+				return false, ffMPEGInfo, nil
+			} else if exportAudioArgs == nil || exportSubArgs == nil {
+
+				if exportAudioArgs == nil {
+					ffMPEGInfo.AudioInfoList = nil
+					return false, ffMPEGInfo, nil
+				}
+				if exportSubArgs == nil {
+					// 可以继续执行
+					ffMPEGInfo.SubtitleInfoList = nil
+				}
 			}
 		} else {
 			f.log.Errorln("ExportFFMPEGInfo.getAudioAndSubExportArgs Not Support ExportType")
@@ -528,9 +538,11 @@ func (f *FFMPEGHelper) exportAudioAndSubtitles(audioArgs, subArgs []string, expo
 		if err != nil {
 			return execErrorString, err
 		}
-		execErrorString, err = f.execFFMPEG(subArgs)
-		if err != nil {
-			return execErrorString, err
+		if subArgs != nil {
+			execErrorString, err = f.execFFMPEG(subArgs)
+			if err != nil {
+				return execErrorString, err
+			}
 		}
 	} else if exportType == Audio {
 		execErrorString, err := f.execFFMPEG(audioArgs)
