@@ -3,6 +3,7 @@ package settings
 import "github.com/ChineseSubFinder/csf-supplier-base/pkg/common"
 
 type ZiMuKuConfig struct {
+	SearchFormatUrlPrefix  string                // 搜索的格式化url前缀
 	SiteRootUrl            string                // https://zimuku.org
 	SubsSaveRootDirPath    string                // 字幕存储的根目录，后续在数据库中只会存储相对路径
 	Interval               int                   // 每隔多少分钟检查一次，这个是理想的间隔
